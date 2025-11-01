@@ -25,7 +25,7 @@ type ChatMessage = {
 const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
   const { t } = useI18n();
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { sender: "model", content: "Hi! I'm your CareCast AI assistant. How can I help you with your vehicle today?" },
+    { sender: "model", content: t('chat.initial_greeting') },
   ]);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
   const handleStartVoice = async () => {
     setVoiceStatus("connecting");
     setVoiceError(null);
-    setMessages((prev) => [...prev, { sender: "model", content: "🎤 Connecting to voice assistant..." }]);
+    setMessages((prev) => [...prev, { sender: "model", content: t('chat.voice_connecting') }]);
 
     try {
       if (!API_KEY) throw new Error("Missing API key");
@@ -77,7 +77,7 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
             setVoiceStatus("connected");
             setMessages((prev) => {
               const copy = [...prev];
-              copy[copy.length - 1].content = "✅ Voice connection established! Speak now.";
+              copy[copy.length - 1].content = t('chat.voice_connected');
               return copy;
             });
 
@@ -103,7 +103,7 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
               const inputText = currentInputTranscriptionRef.current.trim();
               const outputText = currentOutputTranscriptionRef.current.trim();
               const newMsgs: ChatMessage[] = [];
-              if (inputText) newMsgs.push({ sender: "user", content: `(Voice) ${inputText}` });
+              if (inputText) newMsgs.push({ sender: "user", content: `${t('chat.voice_prefix')} ${inputText}` });
               if (outputText) newMsgs.push({ sender: "model", content: outputText });
               if (newMsgs.length) setMessages((prev) => [...prev, ...newMsgs]);
               currentInputTranscriptionRef.current = "";
@@ -112,11 +112,11 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
           },
           onerror: (e) => {
             console.error("Voice error:", e);
-            setVoiceError("Voice connection error");
+            setVoiceError(t('chat.voice_error'));
             cleanupVoiceSession();
           },
           onclose: () => {
-            setMessages((prev) => [...prev, { sender: "model", content: "🔴 Voice session ended." }]);
+            setMessages((prev) => [...prev, { sender: "model", content: t('chat.voice_ended') }]);
             cleanupVoiceSession();
           },
         },
@@ -131,7 +131,7 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
       await sessionPromise;
     } catch (err) {
       console.error(err);
-      setVoiceError("Unable to connect voice session.");
+      setVoiceError(t('chat.voice_unable'));
       setVoiceStatus("error");
     }
   };
@@ -160,7 +160,7 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
       console.error(err);
       setMessages((prev) => {
         const copy = [...prev];
-        copy[copy.length - 1].content = "⚠️ Trouble connecting. Please try again.";
+        copy[copy.length - 1].content = t('chat.trouble_connecting');
         return copy;
       });
     } finally {
@@ -171,7 +171,7 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
   // ---- Maps & Booking ----
   const handleFindGarages = () => {
     if (isLoading) return;
-    setMessages((prev) => [...prev, { sender: "user", content: "Find nearby garages" }]);
+    setMessages((prev) => [...prev, { sender: "user", content: t('chat.find_garages_msg') }]);
     setIsLoading(true);
 
     navigator.geolocation.getCurrentPosition(
@@ -185,14 +185,14 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
             { sender: "model", content: text, groundingChunks: res.candidates?.[0]?.groundingMetadata?.groundingChunks || [] },
           ]);
         } catch {
-          setMessages((prev) => [...prev, { sender: "model", content: "Error retrieving garage data." }]);
+          setMessages((prev) => [...prev, { sender: "model", content: t('chat.error_garages') }]);
         } finally {
           setIsLoading(false);
         }
       },
       (err) => {
         console.error(err);
-        setMessages((prev) => [...prev, { sender: "model", content: "Unable to access your location." }]);
+        setMessages((prev) => [...prev, { sender: "model", content: t('chat.unable_location') }]);
         setIsLoading(false);
       }
     );
@@ -202,11 +202,11 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
     const bookingDate = new Date();
     bookingDate.setDate(bookingDate.getDate() + 2);
     const time = "10:00 AM";
-    const date = bookingDate.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+    const date = bookingDate.toLocaleDateString(currentLang === 'ar' ? 'ar-SA' : 'en-US', { weekday: "short", month: "short", day: "numeric" });
     setMessages((prev) => [
       ...prev,
-      { sender: "user", content: `I'd like to book a service at ${garage}.` },
-      { sender: "model", content: `✅ Booking confirmed at ${garage} for ${date} at ${time}. +100 Loyalty Points added!` },
+      { sender: "user", content: `${t('chat.book_at')} ${garage}.` },
+      { sender: "model", content: `${t('chat.booking_confirmed')} ${garage} ${t('chat.booking_for')} ${date} ${t('chat.booking_at')} ${time}. ${t('chat.loyalty_added')}` },
     ]);
   };
 
@@ -224,7 +224,7 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold">{t('chat.title')}</h1>
-                <p className="text-sm opacity-90">Ask me anything about your car</p>
+                <p className="text-sm opacity-90">{t('chat.ask_anything')}</p>
               </div>
             </div>
             <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
@@ -246,7 +246,7 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
                           {chunk.maps.title}
                         </a>
                         <Button size="sm" className="w-full mt-2" onClick={() => handleBookService(chunk.maps.title)}>
-                          Book Service
+                          {t('chat.book_service_btn')}
                         </Button>
                       </div>
                     ))}

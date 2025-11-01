@@ -25,8 +25,8 @@ interface DashboardProps {
 const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
   const { t } = useI18n();
   const vehicle = {
-    make: "Toyota",
-    model: "Camry",
+    make: t('vehicle.make.toyota'),
+    model: t('vehicle.model.camry'),
     year: "2020",
     mileage: 45280,
     health: 87,
@@ -52,7 +52,7 @@ const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
     {
       id: 3,
       title: t('dashboard.brake_inspection'),
-      dueIn: "2 months",
+      dueIn: `2 ${t('time.months')}`,
       status: "upcoming",
       icon: Battery,
       progress: 70,
@@ -60,9 +60,9 @@ const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
   ];
 
   const recentServices = [
-    { title: "Brake Inspection", date: "2 weeks ago", cost: "$89" },
-    { title: "Air Filter Replacement", date: "1 month ago", cost: "$35" },
-    { title: "Oil Change", date: "2 months ago", cost: "$55" },
+    { title: t('service.brake_inspection'), date: `2 ${t('time.weeks_ago')}`, cost: "$89" },
+    { title: t('service.air_filter'), date: `1 ${t('time.month_ago')}`, cost: "$35" },
+    { title: t('service.oil_change'), date: `2 ${t('time.months_ago')}`, cost: "$55" },
   ];
 
   return (
@@ -72,7 +72,7 @@ const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-between mb-2">
             <div className="flex-1">
-              <p className="text-sm opacity-90 mb-1">Your Vehicle</p>
+              <p className="text-sm opacity-90 mb-1">{t('vehicle.your_vehicle')}</p>
               <h1 className="text-2xl font-bold">
                 {vehicle.year} {vehicle.make} {vehicle.model}
               </h1>
@@ -94,7 +94,7 @@ const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
           <Progress value={vehicle.health} className="h-2 bg-white/20" />
 
           <div className="mt-4 flex items-center justify-between text-sm">
-            <span className="opacity-90">Current Mileage</span>
+            <span className="opacity-90">{t('vehicle.current_mileage')}</span>
             <span className="font-semibold">{vehicle.mileage.toLocaleString()} mi</span>
           </div>
         </div>

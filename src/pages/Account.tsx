@@ -44,7 +44,7 @@ const Account = ({ onLanguageChange, currentLang }: AccountProps) => {
               <User className="w-8 h-8 text-primary" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-card-foreground">John Doe</h2>
+              <h2 className="text-lg font-semibold text-card-foreground">{t('user.john_doe')}</h2>
               <p className="text-sm text-muted-foreground">{t('account.email')}</p>
             </div>
           </div>
