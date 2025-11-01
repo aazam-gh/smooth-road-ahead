@@ -12,6 +12,7 @@ const en: Dict = {
   'nav.home': 'Home',
   'nav.chat': 'DriveSense Chat',
   'nav.profile': 'Profile',
+  'nav.vehicle': 'Vehicle',
   'nav.version': 'DriveSense Module v1.3',
 
   'vehicle.title': 'Vehicle Profile',
@@ -175,6 +176,7 @@ const ar: Dict = {
   'nav.home': 'الرئيسية',
   'nav.chat': 'محادثة درايف سنس',
   'nav.profile': 'الملف الشخصي',
+  'nav.vehicle': 'المركبة',
   'nav.version': 'إصدار درايف سنس 1.3',
 
   'vehicle.title': 'بيانات المركبة',

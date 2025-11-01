@@ -1,13 +1,16 @@
-import { Home, User, MessageSquare } from "lucide-react";
+import { Home, User, MessageSquare, Car } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { useI18n } from "@/lib/i18n";
 
 const BottomNav = () => {
   const location = useLocation();
+  const { t } = useI18n();
   
   const tabs = [
-    { path: "/dashboard", icon: Home, label: "Home" },
-    { path: "/chat", icon: MessageSquare, label: "AI Chat" },
-    { path: "/account", icon: User, label: "Account" },
+    { path: "/dashboard", icon: Home, label: t('nav.home') },
+    { path: "/chat", icon: MessageSquare, label: t('nav.chat') },
+    { path: "/vehicle-profile", icon: Car, label: t('nav.vehicle') },
+    { path: "/account", icon: User, label: t('nav.profile') },
   ];
 
   return (
