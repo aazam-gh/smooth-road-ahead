@@ -13,8 +13,17 @@ import {
   Battery,
 } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useI18n } from "@/lib/i18n";
+import { LanguageCode } from "../../types";
 
-const Dashboard = () => {
+interface DashboardProps {
+  onLanguageChange: (lang: LanguageCode) => void;
+  currentLang: LanguageCode;
+}
+
+const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
+  const { t } = useI18n();
   const vehicle = {
     make: "Toyota",
     model: "Camry",
@@ -26,23 +35,23 @@ const Dashboard = () => {
   const maintenanceItems = [
     {
       id: 1,
-      title: "Oil Change",
-      dueIn: "1,200 miles",
+      title: t('dashboard.oil_change'),
+      dueIn: `1,200 ${t('dashboard.miles')}`,
       status: "upcoming",
       icon: Droplets,
       progress: 85,
     },
     {
       id: 2,
-      title: "Tire Rotation",
-      dueIn: "3,500 miles",
+      title: t('dashboard.tire_rotation'),
+      dueIn: `3,500 ${t('dashboard.miles')}`,
       status: "good",
       icon: Wrench,
       progress: 45,
     },
     {
       id: 3,
-      title: "Battery Check",
+      title: t('dashboard.brake_inspection'),
       dueIn: "2 months",
       status: "upcoming",
       icon: Battery,
@@ -61,13 +70,17 @@ const Dashboard = () => {
       {/* Header */}
       <div className="bg-gradient-to-br from-primary to-accent p-6 text-primary-foreground">
         <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <div>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex-1">
               <p className="text-sm opacity-90 mb-1">Your Vehicle</p>
               <h1 className="text-2xl font-bold">
                 {vehicle.year} {vehicle.make} {vehicle.model}
               </h1>
             </div>
+            <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
+          </div>
+
+          <div className="flex items-center justify-between mb-6">
             <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
               <Car className="w-6 h-6" />
             </div>
@@ -77,7 +90,7 @@ const Dashboard = () => {
             <span className="text-3xl font-bold">{vehicle.health}%</span>
             <TrendingUp className="w-5 h-5" />
           </div>
-          <p className="text-sm opacity-90 mb-3">Vehicle Health Score</p>
+          <p className="text-sm opacity-90 mb-3">{t('dashboard.vehicle_health')}</p>
           <Progress value={vehicle.health} className="h-2 bg-white/20" />
 
           <div className="mt-4 flex items-center justify-between text-sm">
@@ -92,7 +105,7 @@ const Dashboard = () => {
         <Card className="p-5 shadow-elevated bg-card mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-card-foreground">
-              Upcoming Maintenance
+              {t('dashboard.upcoming_maintenance')}
             </h2>
             <Badge variant="secondary" className="gap-1">
               <AlertTriangle className="w-3 h-3" />
@@ -125,7 +138,7 @@ const Dashboard = () => {
                       <div>
                         <p className="font-medium text-card-foreground">{item.title}</p>
                         <p className="text-sm text-muted-foreground">
-                          Due in {item.dueIn}
+                          {t('dashboard.due_in')} {item.dueIn}
                         </p>
                       </div>
                     </div>
@@ -140,14 +153,14 @@ const Dashboard = () => {
           </div>
 
           <Button className="w-full mt-4" variant="outline">
-            View All Maintenance
+            {t('dashboard.view_all')}
           </Button>
         </Card>
 
         {/* Recent Services */}
         <Card className="p-5 shadow-card">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-card-foreground">Recent Services</h2>
+            <h2 className="text-lg font-semibold text-card-foreground">{t('dashboard.recent_service')}</h2>
             <Calendar className="w-5 h-5 text-muted-foreground" />
           </div>
 
@@ -167,7 +180,7 @@ const Dashboard = () => {
           </div>
 
           <Button className="w-full mt-4" variant="outline">
-            View Service History
+            {t('dashboard.view_all')}
           </Button>
         </Card>
       </div>

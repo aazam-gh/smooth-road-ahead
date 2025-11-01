@@ -2,27 +2,36 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { Car, Users, Truck } from "lucide-react";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useI18n } from "@/lib/i18n";
+import { LanguageCode } from "../../types";
 
-const OnboardingType = () => {
+interface OnboardingTypeProps {
+  onLanguageChange: (lang: LanguageCode) => void;
+  currentLang: LanguageCode;
+}
+
+const OnboardingType = ({ onLanguageChange, currentLang }: OnboardingTypeProps) => {
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   const vehicleTypes = [
     {
       id: "personal",
-      title: "Personal Vehicle",
-      description: "Track maintenance for your personal car",
+      title: t('onboarding.type.personal'),
+      description: t('onboarding.type.personal_desc'),
       icon: Car,
     },
     {
       id: "family",
-      title: "Family Fleet",
-      description: "Manage multiple family vehicles",
+      title: t('onboarding.type.family'),
+      description: t('onboarding.type.family_desc'),
       icon: Users,
     },
     {
       id: "commercial",
-      title: "Commercial Fleet",
-      description: "Professional fleet management",
+      title: t('onboarding.type.commercial'),
+      description: t('onboarding.type.commercial_desc'),
       icon: Truck,
     },
   ];
@@ -30,12 +39,16 @@ const OnboardingType = () => {
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-md mx-auto">
+        <div className="flex justify-end mb-4">
+          <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
+        </div>
+
         <div className="mb-8 animate-fade-in">
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Choose Your Setup
+            {t('onboarding.choose_setup')}
           </h1>
           <p className="text-muted-foreground">
-            Select how you'll be using CareCast
+            {t('onboarding.select_usage')}
           </p>
         </div>
 
@@ -71,7 +84,7 @@ const OnboardingType = () => {
           className="w-full mt-8"
           onClick={() => navigate("/")}
         >
-          Back
+          {t('onboarding.back')}
         </Button>
       </div>
     </div>

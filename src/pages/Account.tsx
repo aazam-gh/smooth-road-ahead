@@ -2,12 +2,24 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User, Settings, Bell, HelpCircle, LogOut } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
+import { LanguageToggle } from "@/components/LanguageToggle";
+import { useI18n } from "@/lib/i18n";
+import { LanguageCode } from "../../types";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
-const Account = () => {
+interface AccountProps {
+  onLanguageChange: (lang: LanguageCode) => void;
+  currentLang: LanguageCode;
+}
+
+const Account = ({ onLanguageChange, currentLang }: AccountProps) => {
+  const { t } = useI18n();
+
   const menuItems = [
-    { icon: User, title: "Profile Settings", description: "Edit your personal information" },
-    { icon: Settings, title: "App Settings", description: "Customize your experience" },
-    { icon: Bell, title: "Notifications", description: "Manage alerts and reminders" },
+    { icon: User, title: t('account.profile'), description: "Edit your personal information" },
+    { icon: Settings, title: t('account.preferences'), description: "Customize your experience" },
+    { icon: Bell, title: t('account.notifications'), description: t('account.notification_desc') },
     { icon: HelpCircle, title: "Help & Support", description: "Get assistance" },
   ];
 
@@ -15,8 +27,13 @@ const Account = () => {
     <div className="min-h-screen bg-background pb-20">
       <div className="bg-gradient-to-br from-primary to-accent p-6 text-primary-foreground">
         <div className="max-w-md mx-auto">
-          <h1 className="text-2xl font-bold mb-2">Account</h1>
-          <p className="text-sm opacity-90">Manage your profile and settings</p>
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <h1 className="text-2xl font-bold mb-2">{t('account.title')}</h1>
+              <p className="text-sm opacity-90">Manage your profile and settings</p>
+            </div>
+            <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
+          </div>
         </div>
       </div>
 
@@ -28,12 +45,24 @@ const Account = () => {
             </div>
             <div>
               <h2 className="text-lg font-semibold text-card-foreground">John Doe</h2>
-              <p className="text-sm text-muted-foreground">john.doe@example.com</p>
+              <p className="text-sm text-muted-foreground">{t('account.email')}</p>
             </div>
           </div>
           <Button className="w-full" variant="outline">
-            Edit Profile
+            {t('account.profile')}
           </Button>
+        </Card>
+
+        <Card className="p-4 shadow-card mb-6">
+          <div className="flex items-center justify-between p-3">
+            <div className="flex-1">
+              <p className="font-medium text-card-foreground">{t('account.language')}</p>
+              <p className="text-sm text-muted-foreground">
+                {currentLang === 'en' ? 'English' : 'العربية'}
+              </p>
+            </div>
+            <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
+          </div>
         </Card>
 
         <Card className="p-4 shadow-card mb-6">
@@ -60,7 +89,7 @@ const Account = () => {
 
         <Button variant="outline" className="w-full text-destructive hover:bg-destructive/10">
           <LogOut className="w-4 h-4 mr-2" />
-          Sign Out
+          {t('account.logout')}
         </Button>
       </div>
 

@@ -3,6 +3,9 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { I18nProvider } from "@/lib/i18n";
+import { useState, useEffect } from "react";
+import { LanguageCode } from "../types";
 import Welcome from "./pages/Welcome";
 import OnboardingType from "./pages/OnboardingType";
 import OnboardingDetails from "./pages/OnboardingDetails";
@@ -13,25 +16,40 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Welcome />} />
-          <Route path="/onboarding/type" element={<OnboardingType />} />
-          <Route path="/onboarding/details" element={<OnboardingDetails />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/account" element={<Account />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [language, setLanguage] = useState<LanguageCode>(() => {
+    const saved = localStorage.getItem('language');
+    return (saved === 'ar' || saved === 'en' ? saved : 'en') as LanguageCode;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('language', language);
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = language;
+  }, [language]);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <I18nProvider lang={language}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Welcome onLanguageChange={setLanguage} currentLang={language} />} />
+              <Route path="/onboarding/type" element={<OnboardingType onLanguageChange={setLanguage} currentLang={language} />} />
+              <Route path="/onboarding/details" element={<OnboardingDetails onLanguageChange={setLanguage} currentLang={language} />} />
+              <Route path="/dashboard" element={<Dashboard onLanguageChange={setLanguage} currentLang={language} />} />
+              <Route path="/chat" element={<Chat onLanguageChange={setLanguage} currentLang={language} />} />
+              <Route path="/account" element={<Account onLanguageChange={setLanguage} currentLang={language} />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </I18nProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
