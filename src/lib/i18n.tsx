@@ -16,6 +16,7 @@ const en: Dict = {
   'nav.version': 'DriveSense Module v1.3',
 
   'vehicle.title': 'Vehicle Profile',
+  'vehicle.subtitle': 'Manage your vehicle information',
   'vehicle.vin': 'VIN',
   'vehicle.odometer': 'Odometer (miles)',
   'vehicle.lastServiceDate': 'Last Service Date',
@@ -26,6 +27,11 @@ const en: Dict = {
   'vehicle.batteryAgeMonths': 'Battery Age (months)',
   'vehicle.insuranceExpiryDate': 'Insurance Expiry Date',
   'vehicle.zipCode': 'Zip Code',
+  'vehicle.vin_placeholder': 'Enter 17-character VIN',
+  'vehicle.zipcode_placeholder': 'Enter zip code',
+  'vehicle.number_placeholder': '0',
+  'vehicle.validation.vin_invalid': 'VIN must be exactly 17 alphanumeric characters',
+  'vehicle.validation.number_invalid': 'Please enter a valid positive number',
 
   'env.title': 'Environmental Data',
   'env.currentTemp': 'Current Temperature (°C)',
@@ -180,6 +186,7 @@ const ar: Dict = {
   'nav.version': 'إصدار درايف سنس 1.3',
 
   'vehicle.title': 'بيانات المركبة',
+  'vehicle.subtitle': 'إدارة معلومات مركبتك',
   'vehicle.vin': 'رقم الهيكل (VIN)',
   'vehicle.odometer': 'عداد المسافة (ميل)',
   'vehicle.lastServiceDate': 'تاريخ آخر صيانة',
@@ -190,6 +197,11 @@ const ar: Dict = {
   'vehicle.batteryAgeMonths': 'عمر البطارية (بالأشهر)',
   'vehicle.insuranceExpiryDate': 'تاريخ انتهاء التأمين',
   'vehicle.zipCode': 'الرمز البريدي',
+  'vehicle.vin_placeholder': 'أدخل رقم الهيكل المكون من 17 حرف',
+  'vehicle.zipcode_placeholder': 'أدخل الرمز البريدي',
+  'vehicle.number_placeholder': '0',
+  'vehicle.validation.vin_invalid': 'رقم الهيكل يجب أن يكون 17 حرف وأرقام بالضبط',
+  'vehicle.validation.number_invalid': 'يرجى إدخال رقم صحيح موجب',
 
   'env.title': 'البيئة المحيطة',
   'env.currentTemp': 'درجة الحرارة الحالية (°م)',
