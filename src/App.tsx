@@ -7,6 +7,8 @@ import Welcome from "./pages/Welcome";
 import OnboardingType from "./pages/OnboardingType";
 import OnboardingDetails from "./pages/OnboardingDetails";
 import Dashboard from "./pages/Dashboard";
+import Chat from "./pages/Chat";
+import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +24,8 @@ const App = () => (
           <Route path="/onboarding/type" element={<OnboardingType />} />
           <Route path="/onboarding/details" element={<OnboardingDetails />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/account" element={<Account />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

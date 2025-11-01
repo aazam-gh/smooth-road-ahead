@@ -12,6 +12,7 @@ import {
   Droplets,
   Battery,
 } from "lucide-react";
+import BottomNav from "@/components/BottomNav";
 
 const Dashboard = () => {
   const vehicle = {
@@ -170,6 +171,8 @@ const Dashboard = () => {
           </Button>
         </Card>
       </div>
+
+      <BottomNav />
     </div>
   );
 };
