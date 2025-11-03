@@ -131,6 +131,30 @@ const en: Dict = {
   'dashboard.miles': 'miles',
   'dashboard.recent_service': 'Recent Service History',
   'dashboard.view_all': 'View All',
+  
+  'home.daily_offers': 'Daily Food Offers',
+  'home.trending_news': 'Trending News',
+  'home.today_schedule': "Today's Schedule",
+  'home.no_events': 'No events scheduled for today',
+  
+  'food.shawarma': 'Shawarma Special',
+  'food.shawarma_desc': '20% off on all Shawarma meals',
+  'food.burger': 'Premium Burger',
+  'food.burger_desc': 'Buy 1 Get 1 Free',
+  'food.pizza': 'Family Pizza Deal',
+  'food.pizza_desc': 'Large pizza + 2 drinks for 49 SAR',
+  'food.salad': 'Fresh Salad Bowl',
+  'food.salad_desc': 'Healthy choice - 15% off',
+  
+  'news.maintenance_tips': 'Top 5 Car Maintenance Tips for Summer',
+  'news.maintenance_desc': 'Keep your vehicle in top shape during hot weather',
+  'news.fuel_prices': 'Fuel Prices Update This Week',
+  'news.fuel_desc': 'Latest changes in gasoline and diesel prices',
+  
+  'events.morning_service': 'Morning Service Appointment',
+  'events.oil_change': 'Oil Change Service',
+  'events.tire_check': 'Tire Pressure Check',
+  'events.car_wash': 'Car Wash Scheduled',
 
   'account.title': 'Account',
   'account.profile': 'Profile',
@@ -305,6 +329,30 @@ const ar: Dict = {
   'dashboard.miles': 'ميل',
   'dashboard.recent_service': 'سجل الخدمة الأخير',
   'dashboard.view_all': 'عرض الكل',
+  
+  'home.daily_offers': 'عروض الطعام اليومية',
+  'home.trending_news': 'أخبار متداولة',
+  'home.today_schedule': 'جدول اليوم',
+  'home.no_events': 'لا توجد فعاليات مجدولة لهذا اليوم',
+  
+  'food.shawarma': 'شاورما مميزة',
+  'food.shawarma_desc': 'خصم 20% على جميع وجبات الشاورما',
+  'food.burger': 'برجر بريميوم',
+  'food.burger_desc': 'اشتري واحدة واحصل على الثانية مجانًا',
+  'food.pizza': 'عرض بيتزا عائلي',
+  'food.pizza_desc': 'بيتزا كبيرة + مشروبين بـ 49 ريال',
+  'food.salad': 'سلطة طازجة',
+  'food.salad_desc': 'خيار صحي - خصم 15%',
+  
+  'news.maintenance_tips': 'أفضل 5 نصائح لصيانة السيارة في الصيف',
+  'news.maintenance_desc': 'حافظ على مركبتك في أفضل حال خلال الطقس الحار',
+  'news.fuel_prices': 'تحديث أسعار الوقود هذا الأسبوع',
+  'news.fuel_desc': 'آخر التغييرات في أسعار البنزين والديزل',
+  
+  'events.morning_service': 'موعد الصيانة الصباحية',
+  'events.oil_change': 'خدمة تغيير الزيت',
+  'events.tire_check': 'فحص ضغط الإطارات',
+  'events.car_wash': 'غسيل السيارة المجدول',
 
   'account.title': 'الحساب',
   'account.profile': 'الملف الشخصي',
