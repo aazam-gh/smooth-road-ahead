@@ -15,8 +15,11 @@ const en: Dict = {
   'nav.vehicle': 'Vehicle',
   'nav.version': 'DriveSense Module v1.3',
 
+  'common.cancel': 'Cancel',
+
   'vehicle.title': 'Vehicle Profile',
   'vehicle.subtitle': 'Manage your vehicle information',
+  'vehicle.edit_profile': 'Edit Vehicle Profile',
   'vehicle.vin': 'VIN',
   'vehicle.odometer': 'Odometer (miles)',
   'vehicle.lastServiceDate': 'Last Service Date',
@@ -117,6 +120,7 @@ const en: Dict = {
   'onboarding.mileage_ph': 'e.g., 45000',
   'onboarding.continue': 'Continue',
 
+  'dashboard.title': 'Dashboard',
   'dashboard.vehicle_health': 'Vehicle Health',
   'dashboard.excellent': 'Excellent',
   'dashboard.upcoming_maintenance': 'Upcoming Maintenance',
@@ -185,8 +189,11 @@ const ar: Dict = {
   'nav.vehicle': 'المركبة',
   'nav.version': 'إصدار درايف سنس 1.3',
 
+  'common.cancel': 'إلغاء',
+
   'vehicle.title': 'بيانات المركبة',
   'vehicle.subtitle': 'إدارة معلومات مركبتك',
+  'vehicle.edit_profile': 'تعديل ملف السيارة',
   'vehicle.vin': 'رقم الهيكل (VIN)',
   'vehicle.odometer': 'عداد المسافة (ميل)',
   'vehicle.lastServiceDate': 'تاريخ آخر صيانة',
@@ -287,6 +294,7 @@ const ar: Dict = {
   'onboarding.mileage_ph': 'مثال: 45000',
   'onboarding.continue': 'متابعة',
 
+  'dashboard.title': 'لوحة التحكم',
   'dashboard.vehicle_health': 'صحة المركبة',
   'dashboard.excellent': 'ممتاز',
   'dashboard.upcoming_maintenance': 'الصيانة القادمة',

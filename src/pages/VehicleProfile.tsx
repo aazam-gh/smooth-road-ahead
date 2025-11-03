@@ -2,7 +2,21 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Car, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import {
+  Car,
+  AlertCircle,
+  AlertTriangle,
+  CheckCircle2,
+  Calendar,
+  TrendingUp,
+  Wrench,
+  Droplets,
+  Battery,
+  Edit,
+} from "lucide-react";
 import BottomNav from "@/components/BottomNav";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { useI18n } from "@/lib/i18n";
@@ -15,6 +29,7 @@ interface VehicleProfileProps {
 
 const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) => {
   const { t } = useI18n();
+  const [showForm, setShowForm] = useState(false);
   
   const [formData, setFormData] = useState<VehicleProfileType>({
     vin: "",
@@ -78,33 +93,191 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
     }
   };
 
+  const vehicle = {
+    make: t('vehicle.make.toyota'),
+    model: t('vehicle.model.camry'),
+    year: "2020",
+    mileage: 45280,
+    health: 87,
+  };
+
+  const maintenanceItems = [
+    {
+      id: 1,
+      title: t('dashboard.oil_change'),
+      dueIn: `1,200 ${t('dashboard.miles')}`,
+      status: "upcoming",
+      icon: Droplets,
+      progress: 85,
+    },
+    {
+      id: 2,
+      title: t('dashboard.tire_rotation'),
+      dueIn: `3,500 ${t('dashboard.miles')}`,
+      status: "good",
+      icon: Wrench,
+      progress: 45,
+    },
+    {
+      id: 3,
+      title: t('dashboard.brake_inspection'),
+      dueIn: `2 ${t('time.months')}`,
+      status: "upcoming",
+      icon: Battery,
+      progress: 70,
+    },
+  ];
+
+  const recentServices = [
+    { title: t('service.brake_inspection'), date: `2 ${t('time.weeks_ago')}`, cost: "$89" },
+    { title: t('service.air_filter'), date: `1 ${t('time.month_ago')}`, cost: "$35" },
+    { title: t('service.oil_change'), date: `2 ${t('time.months_ago')}`, cost: "$55" },
+  ];
+
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
       <div className="bg-gradient-to-br from-primary to-accent p-6 text-primary-foreground">
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                <Car className="w-6 h-6" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold">
-                  {t('vehicle.title')}
-                </h1>
-                <p className="text-sm opacity-90">
-                  {t('vehicle.subtitle')}
-                </p>
-              </div>
+            <div className="flex-1">
+              <p className="text-sm opacity-90 mb-1">{t('vehicle.your_vehicle')}</p>
+              <h1 className="text-2xl font-bold">
+                {vehicle.year} {vehicle.make} {vehicle.model}
+              </h1>
             </div>
             <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
+          </div>
+
+          <div className="flex items-center justify-between mb-6">
+            <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <Car className="w-6 h-6" />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-3xl font-bold">{vehicle.health}%</span>
+            <TrendingUp className="w-5 h-5" />
+          </div>
+          <p className="text-sm opacity-90 mb-3">{t('dashboard.vehicle_health')}</p>
+          <Progress value={vehicle.health} className="h-2 bg-white/20" />
+
+          <div className="mt-4 flex items-center justify-between text-sm">
+            <span className="opacity-90">{t('vehicle.current_mileage')}</span>
+            <span className="font-semibold">{vehicle.mileage.toLocaleString()} mi</span>
           </div>
         </div>
       </div>
 
       <div className="max-w-md mx-auto px-6 -mt-4">
-        <Card className="p-6 shadow-card animate-slide-up">
-          <div className="space-y-6">
+        {!showForm ? (
+          <>
+            {/* Upcoming Maintenance */}
+            <Card className="p-5 shadow-elevated bg-card mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-card-foreground">
+                  {t('dashboard.upcoming_maintenance')}
+                </h2>
+                <Badge variant="secondary" className="gap-1">
+                  <AlertTriangle className="w-3 h-3" />
+                  {maintenanceItems.filter((i) => i.status === "upcoming").length}
+                </Badge>
+              </div>
+
+              <div className="space-y-4">
+                {maintenanceItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.id} className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                              item.status === "upcoming"
+                                ? "bg-warning/10"
+                                : "bg-success/10"
+                            }`}
+                          >
+                            <Icon
+                              className={`w-5 h-5 ${
+                                item.status === "upcoming"
+                                  ? "text-warning"
+                                  : "text-success"
+                              }`}
+                            />
+                          </div>
+                          <div>
+                            <p className="font-medium text-card-foreground">{item.title}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {t('dashboard.due_in')} {item.dueIn}
+                            </p>
+                          </div>
+                        </div>
+                        {item.status === "good" && (
+                          <CheckCircle2 className="w-5 h-5 text-success" />
+                        )}
+                      </div>
+                      <Progress value={item.progress} className="h-1.5" />
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Button className="w-full mt-4" variant="outline">
+                {t('dashboard.view_all')}
+              </Button>
+            </Card>
+
+            {/* Recent Services */}
+            <Card className="p-5 shadow-card mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-card-foreground">{t('dashboard.recent_service')}</h2>
+                <Calendar className="w-5 h-5 text-muted-foreground" />
+              </div>
+
+              <div className="space-y-3">
+                {recentServices.map((service, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between py-3 border-b border-border last:border-0"
+                  >
+                    <div>
+                      <p className="font-medium text-card-foreground">{service.title}</p>
+                      <p className="text-sm text-muted-foreground">{service.date}</p>
+                    </div>
+                    <span className="font-semibold text-card-foreground">{service.cost}</span>
+                  </div>
+                ))}
+              </div>
+
+              <Button className="w-full mt-4" variant="outline">
+                {t('dashboard.view_all')}
+              </Button>
+            </Card>
+
+            {/* Edit Profile Button */}
+            <Button 
+              className="w-full" 
+              onClick={() => setShowForm(true)}
+            >
+              <Edit className="w-4 h-4 mr-2" />
+              {t('vehicle.edit_profile')}
+            </Button>
+          </>
+        ) : (
+          <Card className="p-6 shadow-card animate-slide-up">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold">{t('vehicle.edit_profile')}</h2>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => setShowForm(false)}
+              >
+                {t('common.cancel')}
+              </Button>
+            </div>
+            
+            <div className="space-y-6">
             {/* VIN - Full width */}
             <div className="space-y-2">
               <Label htmlFor="vin">{t('vehicle.vin')}</Label>
@@ -269,9 +442,10 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
                 value={formData.zipCode}
                 onChange={(e) => handleInputChange('zipCode', e.target.value)}
               />
+              </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        )}
       </div>
 
       <BottomNav />
