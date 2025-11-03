@@ -13,6 +13,8 @@ import Dashboard from "./pages/Dashboard";
 import Chat from "./pages/Chat";
 import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
+import DiscoverFeed from "./pages/DiscoverFeed";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +43,14 @@ const App = () => {
               <Route path="/onboarding/details" element={<OnboardingDetails onLanguageChange={setLanguage} currentLang={language} />} />
               <Route path="/dashboard" element={<Dashboard onLanguageChange={setLanguage} currentLang={language} />} />
               <Route path="/chat" element={<Chat onLanguageChange={setLanguage} currentLang={language} />} />
+              <Route
+                path="/discover"
+                element={
+                  <ErrorBoundary>
+                    <DiscoverFeed onLanguageChange={setLanguage} currentLang={language} />
+                  </ErrorBoundary>
+                }
+              />
               <Route path="/account" element={<Account onLanguageChange={setLanguage} currentLang={language} />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />

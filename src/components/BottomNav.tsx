@@ -1,4 +1,4 @@
-import { Home, User, MessageSquare } from "lucide-react";
+import { Home, User, MessageSquare, Compass } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 const BottomNav = () => {
@@ -6,6 +6,7 @@ const BottomNav = () => {
   
   const tabs = [
     { path: "/dashboard", icon: Home, label: "Home" },
+    { path: "/discover", icon: Compass, label: "Discover" },
     { path: "/chat", icon: MessageSquare, label: "AI Chat" },
     { path: "/account", icon: User, label: "Account" },
   ];
