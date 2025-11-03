@@ -154,7 +154,7 @@ const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold flex items-center gap-2">
               <Calendar className="h-5 w-5 text-primary" />
-              {t('home.today_schedule')}
+              {t('home.today_events')}
             </h2>
           </div>
           

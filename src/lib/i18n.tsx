@@ -134,7 +134,7 @@ const en: Dict = {
   
   'home.daily_offers': 'Daily Food Offers',
   'home.trending_news': 'Trending News',
-  'home.today_schedule': "Today's Schedule",
+  'home.today_events': "Today's Events",
   'home.no_events': 'No events scheduled for today',
   
   'food.shawarma': 'Shawarma Special',
@@ -332,7 +332,7 @@ const ar: Dict = {
   
   'home.daily_offers': 'عروض الطعام اليومية',
   'home.trending_news': 'أخبار متداولة',
-  'home.today_schedule': 'جدول اليوم',
+  'home.today_events': 'فعاليات اليوم',
   'home.no_events': 'لا توجد فعاليات مجدولة لهذا اليوم',
   
   'food.shawarma': 'شاورما مميزة',
