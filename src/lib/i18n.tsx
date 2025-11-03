@@ -4,13 +4,13 @@ import { LanguageCode } from '../../types';
 type Dict = Record<string, string>;
 
 const en: Dict = {
-  'app.brand': 'DriveSense',
+  'app.brand': 'Drive',
   'app.analyzing': 'Analyzing...',
   'app.calculate': 'Calculate PRR Score',
   'app.calc_failed': 'Failed to calculate PRR score. Please try again.',
 
   'nav.home': 'Home',
-  'nav.chat': 'DriveSense Chat',
+  'nav.chat': 'Drive Chat',
   'nav.profile': 'Profile',
   'nav.vehicle': 'Vehicle',
   'nav.version': 'DriveSense Module v1.3',

@@ -14,6 +14,9 @@ import Chat from "./pages/Chat";
 import Account from "./pages/Account";
 import VehicleProfile from "./pages/VehicleProfile";
 import NotFound from "./pages/NotFound";
+import DiscoverFeed from "./pages/DiscoverFeed";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+
 
 const queryClient = new QueryClient();
 
@@ -44,6 +47,7 @@ const App = () => {
               <Route path="/chat" element={<Chat onLanguageChange={setLanguage} currentLang={language} />} />
               <Route path="/account" element={<Account onLanguageChange={setLanguage} currentLang={language} />} />
               <Route path="/vehicle-profile" element={<VehicleProfile onLanguageChange={setLanguage} currentLang={language} />} />
+              <Route path="/discover" element={<ErrorBoundary><DiscoverFeed onLanguageChange={setLanguage} currentLang={language} /></ErrorBoundary>}/>
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
