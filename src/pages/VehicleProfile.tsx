@@ -18,7 +18,7 @@ import {
   Edit,
 } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
-import { LanguageToggle } from "@/components/LanguageToggle";
+import Header from "@/components/Header";
 import { useI18n } from "@/lib/i18n";
 import { LanguageCode, VehicleProfile as VehicleProfileType } from "../../types";
 
@@ -136,19 +136,16 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-primary to-accent p-6 text-primary-foreground">
+      <Header 
+        title={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} 
+        onLanguageChange={onLanguageChange}
+        currentLang={currentLang}
+        showProfileButton={true}
+      />
+      
+      {/* Vehicle Health Section */}
+      <div className="bg-gradient-to-br from-primary to-accent p-6 text-primary-foreground -mt-6">
         <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex-1">
-              <p className="text-sm opacity-90 mb-1">{t('vehicle.your_vehicle')}</p>
-              <h1 className="text-2xl font-bold">
-                {vehicle.year} {vehicle.make} {vehicle.model}
-              </h1>
-            </div>
-            <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
-          </div>
-
           <div className="flex items-center justify-between mb-6">
             <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
               <Car className="w-6 h-6" />

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import BottomNav from "@/components/BottomNav";
-import { LanguageToggle } from "@/components/LanguageToggle";
+import Header from "@/components/Header";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Tag, Lightbulb, Bot, Bell, Car, Heart, Bookmark, ExternalLink } from "lucide-react";
 import { LanguageCode } from "../../types";
@@ -126,18 +126,12 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
 
   return (
     <div className="min-h-screen bg-background pb-20 flex flex-col">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-primary to-accent p-6 text-primary-foreground">
-        <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <h1 className="text-2xl font-bold">Discover</h1>
-              <p className="text-sm opacity-90">Events, offers, tips and AI picks – updated daily.</p>
-            </div>
-            <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
-          </div>
-        </div>
-      </div>
+      <Header 
+        title="Discover" 
+        onLanguageChange={onLanguageChange}
+        currentLang={currentLang}
+        showProfileButton={true}
+      />
 
       {/* Feed */}
       <div className="max-w-md mx-auto w-full px-6 py-6 space-y-4">

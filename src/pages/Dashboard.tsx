@@ -16,7 +16,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
-import { LanguageToggle } from "@/components/LanguageToggle";
+import Header from "@/components/Header";
 import { useI18n } from "@/lib/i18n";
 import { LanguageCode } from "../../types";
 
@@ -81,15 +81,12 @@ const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
 
   return (
     <div className="min-h-screen bg-background pb-20">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-primary to-accent p-6 text-primary-foreground">
-        <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold">{t('dashboard.title')}</h1>
-            <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
-          </div>
-        </div>
-      </div>
+      <Header 
+        title={t('dashboard.title')} 
+        onLanguageChange={onLanguageChange}
+        currentLang={currentLang}
+        showProfileButton={true}
+      />
 
       <div className="max-w-md mx-auto px-6 py-8 space-y-8">
         {/* Food Offers Carousel */}
