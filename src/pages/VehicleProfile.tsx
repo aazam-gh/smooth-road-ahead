@@ -169,7 +169,7 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24">
         {/* Vehicle Health Section */}
-        <Card className="p-6 bg-gradient-to-br from-[#8B1538] to-[#6D1028] text-white border-0 mb-6">
+        <Card className="p-6 bg-gradient-to-br from-[#8B1538] to-[#6568F4] text-white border-0 mb-6">
           <div className="max-w-md mx-auto">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-3xl font-bold">{vehicle.health}%</span>
@@ -273,7 +273,7 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
 
             {/* Edit Profile Button */}
             <Button 
-              className="w-full bg-[#8B1538] hover:bg-[#6D1028]" 
+              className="w-full bg-[#8B1538] hover:bg-[#6568F4]" 
               onClick={() => setShowForm(true)}
             >
               <Edit className="w-4 h-4 mr-2" />

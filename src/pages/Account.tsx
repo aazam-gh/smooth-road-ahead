@@ -64,7 +64,7 @@ const Account = ({ onLanguageChange, currentLang }: AccountProps) => {
               <p className="text-sm text-gray-600">{t('account.email')}</p>
             </div>
           </div>
-          <Button className="w-full bg-[#8B1538] hover:bg-[#6D1028]">
+          <Button className="w-full bg-[#8B1538] hover:bg-[#6568F4]">
             {t('account.profile')}
           </Button>
         </Card>

@@ -448,7 +448,7 @@ export function SignupForm({ onStepChange }: SignupFormProps) {
               type="button"
               onClick={handleNext}
               disabled={!isStepValid()}
-              className={`flex-1 bg-[#8B1538] hover:bg-[#6D1028] ${step === 1 ? 'w-full' : ''}`}
+              className={`flex-1 bg-[#8B1538] hover:bg-[#6568F4] ${step === 1 ? 'w-full' : ''}`}
             >
               Continue
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -457,7 +457,7 @@ export function SignupForm({ onStepChange }: SignupFormProps) {
             <Button
               type="submit"
               disabled={!isStepValid()}
-              className="flex-1 bg-[#8B1538] hover:bg-[#6D1028]"
+              className="flex-1 bg-[#8B1538] hover:bg-[#6568F4]"
             >
               <Check className="mr-2 h-4 w-4" />
               Complete Setup

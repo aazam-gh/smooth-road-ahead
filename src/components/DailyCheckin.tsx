@@ -44,7 +44,7 @@ const DailyCheckin: React.FC = () => {
           onClick={onCheckin} 
           size="sm" 
           disabled={checkedToday}
-          className={checkedToday ? "w-full" : "w-full bg-[#8B1538] hover:bg-[#6D1028]"}
+          className={checkedToday ? "w-full" : "w-full bg-[#8B1538] hover:bg-[#6568F4]"}
         >
           {checkedToday ? (t("checkin.checked") || "✓ Checked In") : (t("checkin.check_in") || "Check In")}
         </Button>

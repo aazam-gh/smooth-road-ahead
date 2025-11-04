@@ -192,7 +192,7 @@ export function OfferModal({ offer, isOpen, onClose, onClaim, isClaimed }: Offer
           <div className="flex gap-3">
             {!isClaimed ? (
               <Button 
-                className="flex-1 bg-[#8B1538] hover:bg-[#6D1028]"
+                className="flex-1 bg-[#8B1538] hover:bg-[#6568F4]"
                 onClick={handleClaim}
               >
                 {t('newdashboard.claim_offer')}

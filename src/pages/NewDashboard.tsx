@@ -403,7 +403,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
               </Card>
 
               {/* Traffic Card */}
-              <Card className="p-6 bg-gradient-to-br from-[#8B1538] to-[#6D1028] text-white border-0">
+              <Card className="p-6 bg-gradient-to-br from-[#8B1538] to-[#6568F4] text-white border-0">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <p className="text-white/80 text-sm mb-1">{t('newdashboard.traffic_to_office')}</p>
@@ -430,7 +430,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                 <h3>{t('newdashboard.todays_plans')}</h3>
                 <Button 
                   size="sm" 
-                  className="bg-[#8B1538] hover:bg-[#6D1028]"
+                  className="bg-[#8B1538] hover:bg-[#6568F4]"
                   onClick={() => setShowAddPlanForm(!showAddPlanForm)}
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -499,7 +499,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                     <Button 
                       size="sm" 
                       onClick={addPlan}
-                      className="bg-[#8B1538] hover:bg-[#6D1028]"
+                      className="bg-[#8B1538] hover:bg-[#6568F4]"
                     >
                       {t('newdashboard.save_plan')}
                     </Button>
@@ -670,7 +670,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                           size="sm" 
                           className={claimedOffers.has(offer.id) 
                             ? "bg-green-500 hover:bg-green-600" 
-                            : "bg-[#8B1538] hover:bg-[#6D1028]"
+                            : "bg-[#8B1538] hover:bg-[#6568F4]"
                           }
                           onClick={(e) => {
                             e.stopPropagation();

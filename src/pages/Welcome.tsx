@@ -79,7 +79,7 @@ const Welcome = ({ onLanguageChange, currentLang }: WelcomeProps) => {
             <Button
               onClick={() => navigate("/onboarding")}
               size="lg"
-              className="w-full bg-[#8B1538] hover:bg-[#6D1028]"
+              className="w-full bg-[#8B1538] hover:bg-[#6568F4]"
             >
               {t('welcome.get_started')}
             </Button>
