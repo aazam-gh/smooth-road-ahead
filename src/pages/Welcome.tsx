@@ -84,7 +84,7 @@ const Welcome = ({ onLanguageChange, currentLang }: WelcomeProps) => {
               {t('welcome.get_started')}
             </Button>
             <Button
-              onClick={() => navigate("/onboarding")}
+              onClick={() => navigate("/ndashboard")}
               variant="outline"
               size="lg"
               className="w-full"
