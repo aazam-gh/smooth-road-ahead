@@ -91,7 +91,7 @@ export function SignupForm({ onStepChange }: SignupFormProps) {
     e.preventDefault();
     localStorage.setItem("userProfile", JSON.stringify(formData));
     console.log('Form submitted:', formData);
-    navigate("/dashboard");
+    navigate("/ndashboard");
 
   };
 

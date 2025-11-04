@@ -7,7 +7,7 @@ const BottomNav = () => {
   const { t } = useI18n();
   
   const tabs = [
-    { path: "/dashboard", icon: Home, label: t('nav.home') },
+    { path: "/ndashboard", icon: Home, label: t('nav.home') },
     { path: "/chat", icon: MessageSquare, label: t('nav.chat') },
     { path: "/vehicle-profile", icon: Car, label: t('nav.vehicle') },
     { path: "/discover", icon: Compass, label: "Discover" },
