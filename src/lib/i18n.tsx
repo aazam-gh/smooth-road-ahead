@@ -335,6 +335,21 @@ const en: Dict = {
   'chat.trouble_connecting': '⚠️ Trouble connecting. Please try again.',
   'chat.book_service_btn': 'Book Service',
   'chat.voice_prefix': '(Voice)',
+  'chat.family_activities_title': 'Family Activities',
+  'chat.family_activities_subtitle': 'AI planner for group and family experiences',
+  'chat.family_activities_features': 'Weekend plans • Age-appropriate • Budget-friendly',
+  'chat.plan_activities_btn': 'Plan Family Activities',
+  'chat.family_activities_request': 'Plan family activities for this weekend',
+  'chat.travel_optimization_title': 'Travel Optimization',
+  'chat.travel_optimization_subtitle': 'AI-assisted weekend trips considering traffic, weather, and preferences',
+  'chat.travel_optimization_features': 'Weather-aware • Traffic optimization • Route planning',
+  'chat.optimize_travel_btn': 'Optimize My Trip',
+  'chat.travel_optimization_request': 'Plan an optimized weekend trip',
+  'chat.insurance_title': 'Insurance Assistant',
+  'chat.insurance_subtitle': 'AI-assisted queries to your insurance',
+  'chat.insurance_features': 'Policy guidance • Claims help • Coverage advice',
+  'chat.insurance_help_btn': 'Get Insurance Help',
+  'chat.insurance_query_request': 'Help me with insurance questions',
 };
 
 const ar: Dict = {
@@ -669,6 +684,21 @@ const ar: Dict = {
   'chat.trouble_connecting': '⚠️ مشكلة في الاتصال. يرجى المحاولة مرة أخرى.',
   'chat.book_service_btn': 'احجز خدمة',
   'chat.voice_prefix': '(صوت)',
+  'chat.family_activities_title': 'الأنشطة العائلية',
+  'chat.family_activities_subtitle': 'مخطط ذكي للتجارب الجماعية والعائلية',
+  'chat.family_activities_features': 'خطط نهاية الأسبوع • مناسب للأعمار • صديق للميزانية',
+  'chat.plan_activities_btn': 'خطط للأنشطة العائلية',
+  'chat.family_activities_request': 'خطط للأنشطة العائلية لهذه نهاية الأسبوع',
+  'chat.travel_optimization_title': 'تحسين السفر',
+  'chat.travel_optimization_subtitle': 'رحلات نهاية الأسبوع بمساعدة الذكاء الاصطناعي مع مراعاة المرور والطقس والتفضيلات',
+  'chat.travel_optimization_features': 'مراعي للطقس • تحسين المرور • تخطيط المسار',
+  'chat.optimize_travel_btn': 'حسّن رحلتي',
+  'chat.travel_optimization_request': 'خطط لرحلة نهاية أسبوع محسّنة',
+  'chat.insurance_title': 'مساعد التأمين',
+  'chat.insurance_subtitle': 'استفسارات التأمين بمساعدة الذكاء الاصطناعي',
+  'chat.insurance_features': 'إرشاد الوثائق • مساعدة المطالبات • نصائح التغطية',
+  'chat.insurance_help_btn': 'احصل على مساعدة التأمين',
+  'chat.insurance_query_request': 'ساعدني في أسئلة التأمين',
 };
 
 const dicts: Record<LanguageCode, Dict> = { en, ar };

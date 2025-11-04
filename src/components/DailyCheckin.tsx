@@ -34,7 +34,7 @@ const DailyCheckin: React.FC = () => {
     <Card className="p-6">
       <div className="flex items-center justify-between mb-4">
         <h4>{t("checkin.title") || "Daily Check-in"}</h4>
-        <Badge variant="secondary" className="bg-[#8B1538]/10 text-[#8B1538] border-0">
+        <Badge variant="secondary" className="bg-[#6568F4]/10 text-[#6568F4] border-0">
           {streak} {t("checkin.days") || "days"}
         </Badge>
       </div>
@@ -44,17 +44,17 @@ const DailyCheckin: React.FC = () => {
           onClick={onCheckin} 
           size="sm" 
           disabled={checkedToday}
-          className={checkedToday ? "w-full" : "w-full bg-[#8B1538] hover:bg-[#6568F4]"}
+          className={checkedToday ? "w-full" : "w-full bg-[#6568F4] hover:bg-[#6568F4]"}
         >
           {checkedToday ? (t("checkin.checked") || "✓ Checked In") : (t("checkin.check_in") || "Check In")}
         </Button>
         {streak > 0 && (
           <div className="text-center">
-            <div className="text-2xl font-bold text-[#8B1538]">{streak}</div>
+            <div className="text-2xl font-bold text-[#6568F4]">{streak}</div>
             <div className="text-xs text-gray-500">{t("checkin.days") || "day"} streak</div>
             <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
               <div 
-                className="bg-[#8B1538] h-2 rounded-full transition-all duration-300" 
+                className="bg-[#6568F4] h-2 rounded-full transition-all duration-300" 
                 style={{ width: `${Math.min((streak / 30) * 100, 100)}%` }}
               />
             </div>

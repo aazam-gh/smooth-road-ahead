@@ -145,10 +145,10 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#6568F4] rounded-lg flex items-center justify-center flex-shrink-0">
                 <Car className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               </div>
-              <h2 className="text-[#8B1538] text-sm sm:text-lg md:text-xl truncate">{`${vehicle.year} ${vehicle.make} ${vehicle.model}`}</h2>
+              <h2 className="text-[#6568F4] text-sm sm:text-lg md:text-xl truncate">{`${vehicle.year} ${vehicle.make} ${vehicle.model}`}</h2>
             </div>
 
             <div className="flex items-center gap-1 sm:gap-2 md:gap-4 flex-shrink-0">
@@ -169,7 +169,7 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24">
         {/* Vehicle Health Section */}
-        <Card className="p-6 bg-gradient-to-br from-[#8B1538] to-[#6568F4] text-white border-0 mb-6">
+        <Card className="p-6 bg-gradient-to-br from-[#6568F4] to-[#6568F4] text-white border-0 mb-6">
           <div className="max-w-md mx-auto">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-3xl font-bold">{vehicle.health}%</span>
@@ -273,7 +273,7 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
 
             {/* Edit Profile Button */}
             <Button 
-              className="w-full bg-[#8B1538] hover:bg-[#6568F4]" 
+              className="w-full bg-[#6568F4] hover:bg-[#6568F4]" 
               onClick={() => setShowForm(true)}
             >
               <Edit className="w-4 h-4 mr-2" />

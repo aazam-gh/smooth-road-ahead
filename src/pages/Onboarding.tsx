@@ -20,10 +20,10 @@ export default function Onboarding({ onLanguageChange, currentLang }: Onboarding
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             <div className="flex items-center gap-2 sm:gap-4">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#6568F4] rounded-lg flex items-center justify-center">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               </div>
-              <h2 className="text-[#8B1538] text-lg sm:text-xl">QIC</h2>
+              <h2 className="text-[#6568F4] text-lg sm:text-xl">QIC</h2>
             </div>
             <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
           </div>

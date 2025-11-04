@@ -156,10 +156,10 @@ export function SignupForm({ onStepChange }: SignupFormProps) {
     <div className="w-full max-w-xl">
       {/* Logo/Brand */}
       <div className="mb-12">
-        <div className="w-12 h-12 bg-[#8B1538] rounded-lg mb-4 flex items-center justify-center">
+        <div className="w-12 h-12 bg-[#6568F4] rounded-lg mb-4 flex items-center justify-center">
           <MapPin className="h-6 w-6 text-white" />
         </div>
-        <h2 className="text-[#8B1538]">QIC</h2>
+        <h2 className="text-[#6568F4]">QIC</h2>
       </div>
 
       {/* Progress Bar */}
@@ -178,7 +178,7 @@ export function SignupForm({ onStepChange }: SignupFormProps) {
             <div
               key={index}
               className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${
-                index < step ? 'bg-[#8B1538]' : 'bg-gray-200'
+                index < step ? 'bg-[#6568F4]' : 'bg-gray-200'
               }`}
             />
           ))}
@@ -367,18 +367,18 @@ export function SignupForm({ onStepChange }: SignupFormProps) {
                       onClick={() => togglePreference('foodPreferences', option.id)}
                       className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all ${
                         isSelected
-                          ? 'border-[#8B1538] bg-[#8B1538]/5'
+                          ? 'border-[#6568F4] bg-[#6568F4]/5'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
                       <div className={`flex items-center justify-center w-10 h-10 rounded-lg ${
-                        isSelected ? 'bg-[#8B1538] text-white' : 'bg-gray-100 text-gray-600'
+                        isSelected ? 'bg-[#6568F4] text-white' : 'bg-gray-100 text-gray-600'
                       }`}>
                         <Icon className="h-5 w-5" />
                       </div>
                       <span className="text-sm flex-1 text-left">{option.label}</span>
                       {isSelected && (
-                        <Check className="h-5 w-5 text-[#8B1538]" />
+                        <Check className="h-5 w-5 text-[#6568F4]" />
                       )}
                     </button>
                   );
@@ -410,18 +410,18 @@ export function SignupForm({ onStepChange }: SignupFormProps) {
                       onClick={() => togglePreference('activityPreferences', option.id)}
                       className={`flex items-center gap-3 p-4 rounded-lg border-2 transition-all ${
                         isSelected
-                          ? 'border-[#8B1538] bg-[#8B1538]/5'
+                          ? 'border-[#6568F4] bg-[#6568F4]/5'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
                       <div className={`flex items-center justify-center w-10 h-10 rounded-lg ${
-                        isSelected ? 'bg-[#8B1538] text-white' : 'bg-gray-100 text-gray-600'
+                        isSelected ? 'bg-[#6568F4] text-white' : 'bg-gray-100 text-gray-600'
                       }`}>
                         <Icon className="h-5 w-5" />
                       </div>
                       <span className="text-sm flex-1 text-left">{option.label}</span>
                       {isSelected && (
-                        <Check className="h-5 w-5 text-[#8B1538]" />
+                        <Check className="h-5 w-5 text-[#6568F4]" />
                       )}
                     </button>
                   );
@@ -448,7 +448,7 @@ export function SignupForm({ onStepChange }: SignupFormProps) {
               type="button"
               onClick={handleNext}
               disabled={!isStepValid()}
-              className={`flex-1 bg-[#8B1538] hover:bg-[#6568F4] ${step === 1 ? 'w-full' : ''}`}
+              className={`flex-1 bg-[#6568F4] hover:bg-[#6568F4] ${step === 1 ? 'w-full' : ''}`}
             >
               Continue
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -457,7 +457,7 @@ export function SignupForm({ onStepChange }: SignupFormProps) {
             <Button
               type="submit"
               disabled={!isStepValid()}
-              className="flex-1 bg-[#8B1538] hover:bg-[#6568F4]"
+              className="flex-1 bg-[#6568F4] hover:bg-[#6568F4]"
             >
               <Check className="mr-2 h-4 w-4" />
               Complete Setup
@@ -468,7 +468,7 @@ export function SignupForm({ onStepChange }: SignupFormProps) {
 
       <p className="text-center text-sm text-gray-500 mt-8">
         Already have an account?{' '}
-        <a href="#" className="text-[#8B1538] hover:underline">
+        <a href="#" className="text-[#6568F4] hover:underline">
           Sign in
         </a>
       </p>
