@@ -16,7 +16,7 @@ import VehicleProfile from "./pages/VehicleProfile";
 import NotFound from "./pages/NotFound";
 import DiscoverFeed from "./pages/DiscoverFeed";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-
+import Onboarding from "./pages/Onboarding"
 
 const queryClient = new QueryClient();
 
@@ -41,8 +41,10 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Welcome onLanguageChange={setLanguage} currentLang={language} />} />
-              <Route path="/onboarding/type" element={<OnboardingType onLanguageChange={setLanguage} currentLang={language} />} />
-              <Route path="/onboarding/details" element={<OnboardingDetails onLanguageChange={setLanguage} currentLang={language} />} />
+<Route
+  path="/onboarding"
+  element={<Onboarding onLanguageChange={setLanguage} currentLang={language} />}
+/>
               <Route path="/dashboard" element={<Dashboard onLanguageChange={setLanguage} currentLang={language} />} />
               <Route path="/chat" element={<Chat onLanguageChange={setLanguage} currentLang={language} />} />
               <Route path="/account" element={<Account onLanguageChange={setLanguage} currentLang={language} />} />
