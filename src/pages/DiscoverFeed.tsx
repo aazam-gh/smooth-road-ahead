@@ -6,6 +6,7 @@ import { Calendar, Tag, Lightbulb, Bot, Bell, Car, Heart, Bookmark, ExternalLink
 import { LanguageCode } from "../../types";
 import { Button } from "@/components/ui/button";
 import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { mockDiscoverData, type DiscoverApiItem } from "../lib/discoverData";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
@@ -98,6 +99,70 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
     } catch {}
   }, []);
 
+  // Keep state in sync across tabs and same-tab custom events
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === LIKED_KEY) {
+        try { const l = JSON.parse(e.newValue || '[]'); setLiked(new Set(Array.isArray(l) ? l : [])); } catch {}
+      }
+      if (e.key === SAVED_KEY) {
+        try { const s = JSON.parse(e.newValue || '[]'); setSaved(new Set(Array.isArray(s) ? s : [])); } catch {}
+      }
+    };
+
+    const onSaved = (ev: Event) => {
+      try {
+        // @ts-ignore
+        const detail = ev.detail || {};
+        const id = detail.id;
+        const isSaved = !!detail.saved;
+        setSaved(prev => {
+          const n = new Set(prev);
+          if (isSaved) n.add(id); else n.delete(id);
+          return n;
+        });
+      } catch {}
+    };
+
+    const onLiked = (ev: Event) => {
+      try {
+        // @ts-ignore
+        const detail = ev.detail || {};
+        const id = detail.id;
+        const isLiked = !!detail.liked;
+        setLiked(prev => {
+          const n = new Set(prev);
+          if (isLiked) n.add(id); else n.delete(id);
+          return n;
+        });
+      } catch {}
+    };
+
+    window.addEventListener('storage', onStorage);
+    window.addEventListener('discover:saved', onSaved as EventListener);
+    window.addEventListener('discover:liked', onLiked as EventListener);
+
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener('discover:saved', onSaved as EventListener);
+      window.removeEventListener('discover:liked', onLiked as EventListener);
+    };
+  }, []);
+
+  // Filter via query param `category`
+  const location = useLocation();
+  const [filterCategory, setFilterCategory] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(location.search);
+      const cat = params.get('category');
+      setFilterCategory(cat ? cat : null);
+    } catch {
+      setFilterCategory(null);
+    }
+  }, [location.search]);
+
   const toggleLike = (id: string) => {
     setLiked(prev => {
       const n = new Set(prev);
@@ -135,7 +200,7 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
 
       {/* Feed */}
       <div className="max-w-md mx-auto w-full px-6 py-6 space-y-4">
-        {feed.map((item) => {
+  {feed.filter(item => !filterCategory || (item.category || '').toLowerCase() === (filterCategory || '').toLowerCase()).map((item) => {
           const Icon = iconFor[item.type];
           const isLiked = liked.has(item.id);
           const isSaved = saved.has(item.id);
@@ -187,7 +252,9 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
                     size="icon"
                     variant="ghost"
                     className={cn("h-8 w-8", isSaved ? "text-primary" : "text-muted-foreground")}
-                    onClick={(e) => { e.stopPropagation(); toggleSave(item.id); }}
+                    onClick={(e) => { e.stopPropagation(); toggleSave(item.id); 
+                      try { window.dispatchEvent(new CustomEvent('discover:saved', { detail: { id: item.id, saved: !isSaved } })); } catch {}
+                    }}
                     aria-label={isSaved ? "Unsave" : "Save"}
                   >
                     <Bookmark className={cn("w-4 h-4", isSaved ? "fill-current" : "")} />
