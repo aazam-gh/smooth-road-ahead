@@ -6,6 +6,7 @@ import { Separator } from '../components/ui/separator';
 import { LanguageToggle } from '../components/LanguageToggle';
 
 import BottomNav from "@/components/BottomNav";
+import DailyCheckin from "@/components/DailyCheckin";
 
 import { 
   MapPin, 
@@ -417,6 +418,9 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
 
           {/* Right Column - Quick Info */}
           <div className="space-y-6">
+            {/* Daily Check-in */}
+            <DailyCheckin />
+
             {/* Quick Stats */}
             <Card className="p-6">
               <h4 className="mb-4">{t('newdashboard.your_activity')}</h4>

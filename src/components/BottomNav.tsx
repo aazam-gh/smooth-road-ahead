@@ -10,7 +10,7 @@ const BottomNav = () => {
     { path: "/ndashboard", icon: Home, label: t('nav.home') },
     { path: "/chat", icon: MessageSquare, label: t('nav.chat') },
     { path: "/vehicle-profile", icon: Car, label: t('nav.vehicle') },
-    { path: "/discover", icon: Compass, label: "Discover" },
+    { path: "/discover", icon: Compass, label: t('discover.title') },
   ];
 
   return (

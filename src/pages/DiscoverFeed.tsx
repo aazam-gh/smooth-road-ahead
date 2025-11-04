@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 import { mockDiscoverData, type DiscoverApiItem } from "../lib/discoverData";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import { useI18n } from "@/lib/i18n";
 
 type FeedType = "event" | "offer" | "tip" | "ai" | "reminder" | "car" | "other";
 
@@ -52,6 +53,8 @@ const colorFor: Record<FeedType, string> = {
 };
 
 const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
+  const { t } = useI18n();
+  
   // Prepare for dynamic API fetch: later, call `/api/discover` here.
   // For now, load from local mockDiscoverData.
   const [feed, setFeed] = useState<FeedItem[]>([]);
@@ -77,7 +80,7 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
         title: d.title,
         description: d.description,
         imageUrl: d.image,
-        actionLabel: "Learn More",
+        actionLabel: t('discover.learn_more'),
         actionHref: d.link || "#",
       }));
       setFeed(items);
@@ -200,7 +203,7 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               </div>
-              <h2 className="text-[#8B1538] text-lg sm:text-xl">Discover</h2>
+              <h2 className="text-[#8B1538] text-lg sm:text-xl">{t('discover.title')}</h2>
             </div>
 
             <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
@@ -264,7 +267,7 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
                     variant="ghost"
                     className={cn("h-8 w-8", isLiked ? "text-red-500" : "text-muted-foreground")}
                     onClick={(e) => { e.stopPropagation(); toggleLike(item.id); }}
-                    aria-label={isLiked ? "Unlike" : "Like"}
+                    aria-label={isLiked ? t('discover.unlike') : t('discover.like')}
                   >
                     <Heart className={cn("w-4 h-4", isLiked ? "fill-red-500" : "")} />
                   </Button>
@@ -276,7 +279,7 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
                     onClick={(e) => { e.stopPropagation(); toggleSave(item.id); 
                       try { window.dispatchEvent(new CustomEvent('discover:saved', { detail: { id: item.id, saved: !isSaved } })); } catch {}
                     }}
-                    aria-label={isSaved ? "Unsave" : "Save"}
+                    aria-label={isSaved ? t('discover.unsave') : t('discover.save')}
                   >
                     <Bookmark className={cn("w-4 h-4", isSaved ? "fill-current" : "")} />
                   </Button>
@@ -289,13 +292,13 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
                 <CardFooter className="pt-0">
                   <div className="flex w-full items-center gap-2">
                     <Button size="sm" className="bg-[#8B1538] hover:bg-[#6D1028]" onClick={(e) => { e.stopPropagation(); openDetails(item); }}>
-                      {item.actionLabel || "View"}
+                      {item.actionLabel || t('discover.view')}
                     </Button>
                     {item.actionHref && (
                       <Button asChild size="sm" variant="outline" onClick={(e) => e.stopPropagation()}>
                         <a href={item.actionHref} target="_blank" rel="noreferrer">
                           <ExternalLink className="mr-1 h-4 w-4" />
-                          Link
+                          {t('discover.link')}
                         </a>
                       </Button>
                     )}
@@ -328,19 +331,19 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
               </div>
               <DialogFooter className="gap-2">
                 <Button variant="outline" onClick={() => { toggleSave(selected.id); }}>
-                  <Bookmark className="mr-2 h-4 w-4" /> {saved.has(selected.id) ? "Saved" : "Save"}
+                  <Bookmark className="mr-2 h-4 w-4" /> {saved.has(selected.id) ? t('discover.saved') : t('discover.save')}
                 </Button>
                 <Button onClick={() => { toggleLike(selected.id); }}>
-                  <Heart className="mr-2 h-4 w-4" /> {liked.has(selected.id) ? "Liked" : "Like"}
+                  <Heart className="mr-2 h-4 w-4" /> {liked.has(selected.id) ? t('discover.liked') : t('discover.like')}
                 </Button>
                 {selected.actionHref && (
                   <Button asChild>
                     <a href={selected.actionHref} target="_blank" rel="noreferrer">
-                      Open Link
+                      {t('discover.open_link')}
                     </a>
                   </Button>
                 )}
-                <Button variant="ghost" onClick={closeDetails}>Close</Button>
+                <Button variant="ghost" onClick={closeDetails}>{t('discover.close')}</Button>
               </DialogFooter>
             </>
           )}
