@@ -1,30 +1,28 @@
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import BottomNav from "@/components/BottomNav";
-import Header from "@/components/Header";
 import { LanguageToggle } from "@/components/LanguageToggle";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, Tag, Lightbulb, Bot, Bell, Car, Heart, Bookmark, ExternalLink, MapPin, Settings } from "lucide-react";
+import { Calendar, Tag, Lightbulb, Bot, Bell, Car, Heart, Bookmark, Share, MessageCircle, MapPin, Settings, Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { LanguageCode } from "../../types";
 import { Button } from "@/components/ui/button";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import { mockDiscoverData, type DiscoverApiItem } from "../lib/discoverData";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n";
 
 type FeedType = "event" | "offer" | "tip" | "ai" | "reminder" | "car" | "other";
 
-interface FeedItem {
+interface VideoFeedItem {
   id: string;
-  type: FeedType; // internal normalized category
-  category: string; // original category label
+  type: FeedType;
+  category: string;
   title: string;
   description: string;
-  imageUrl?: string;
-  actionLabel?: string;
+  videoUrl?: string;
+  duration?: number;
+  author?: string;
+  likes?: number;
+  views?: number;
   actionHref?: string;
-  meta?: string;
 }
 
 interface DiscoverFeedProps {
@@ -52,12 +50,116 @@ const colorFor: Record<FeedType, string> = {
   other: "bg-muted/40 text-foreground",
 };
 
+// Video Player Component
+const VideoPlayer = ({ item, isActive, onTogglePlay, onToggleMute }: {
+  item: VideoFeedItem;
+  isActive: boolean;
+  onTogglePlay: () => void;
+  onToggleMute: () => void;
+}) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isActive) {
+      video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  }, [isActive]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const updateProgress = () => {
+      if (video.duration) {
+        setProgress((video.currentTime / video.duration) * 100);
+      }
+    };
+
+    video.addEventListener('timeupdate', updateProgress);
+    return () => video.removeEventListener('timeupdate', updateProgress);
+  }, []);
+
+  const handlePlayPause = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (isPlaying) {
+      video.pause();
+      setIsPlaying(false);
+    } else {
+      video.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+    }
+    onTogglePlay();
+  };
+
+  const handleMuteToggle = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+    onToggleMute();
+  };
+
+  return (
+    <div className="relative w-full h-full">
+      <video
+        ref={videoRef}
+        src={item.videoUrl}
+        className="w-full h-full object-cover"
+        loop
+        muted={isMuted}
+        playsInline
+        preload="metadata"
+      />
+      
+      {/* Progress bar */}
+      <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/20">
+        <div 
+          className="h-full bg-white transition-all duration-100"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      {/* Play/Pause overlay */}
+      <div 
+        className="absolute inset-0 flex items-center justify-center cursor-pointer"
+        onClick={handlePlayPause}
+      >
+        {!isPlaying && (
+          <div className="bg-black/50 rounded-full p-4">
+            <Play className="w-8 h-8 text-white fill-white" />
+          </div>
+        )}
+      </div>
+
+      {/* Mute button */}
+      <Button
+        size="icon"
+        variant="ghost"
+        className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white"
+        onClick={handleMuteToggle}
+      >
+        {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+      </Button>
+    </div>
+  );
+};
+
 const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
   const { t } = useI18n();
-  
-  // Prepare for dynamic API fetch: later, call `/api/discover` here.
-  // For now, load from local mockDiscoverData.
-  const [feed, setFeed] = useState<FeedItem[]>([]);
+  const [feed, setFeed] = useState<VideoFeedItem[]>([]);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const normalizeCategory = (cat?: string): FeedType => {
     const c = (cat || "").toLowerCase();
@@ -71,16 +173,18 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
   };
 
   useEffect(() => {
-    // Simulate async load; later replace with fetch('/api/discover')
     const load = async () => {
-      const items: FeedItem[] = mockDiscoverData.map((d: DiscoverApiItem) => ({
+      const items: VideoFeedItem[] = mockDiscoverData.map((d: DiscoverApiItem) => ({
         id: d.id,
         type: normalizeCategory(d.category),
         category: d.category,
         title: d.title,
         description: d.description,
-        imageUrl: d.image,
-        actionLabel: t('discover.learn_more'),
+        videoUrl: d.video,
+        duration: d.duration,
+        author: d.author,
+        likes: d.likes,
+        views: d.views,
         actionHref: d.link || "#",
       }));
       setFeed(items);
@@ -88,7 +192,7 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
     load();
   }, []);
 
-  // Like / Save state persisted in localStorage
+  // Like / Save state
   const [liked, setLiked] = useState<Set<string>>(new Set());
   const [saved, setSaved] = useState<Set<string>>(new Set());
   const LIKED_KEY = "discoverLiked";
@@ -102,70 +206,6 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
       setSaved(new Set(Array.isArray(s) ? s : []));
     } catch {}
   }, []);
-
-  // Keep state in sync across tabs and same-tab custom events
-  useEffect(() => {
-    const onStorage = (e: StorageEvent) => {
-      if (e.key === LIKED_KEY) {
-        try { const l = JSON.parse(e.newValue || '[]'); setLiked(new Set(Array.isArray(l) ? l : [])); } catch {}
-      }
-      if (e.key === SAVED_KEY) {
-        try { const s = JSON.parse(e.newValue || '[]'); setSaved(new Set(Array.isArray(s) ? s : [])); } catch {}
-      }
-    };
-
-    const onSaved = (ev: Event) => {
-      try {
-        // @ts-ignore
-        const detail = ev.detail || {};
-        const id = detail.id;
-        const isSaved = !!detail.saved;
-        setSaved(prev => {
-          const n = new Set(prev);
-          if (isSaved) n.add(id); else n.delete(id);
-          return n;
-        });
-      } catch {}
-    };
-
-    const onLiked = (ev: Event) => {
-      try {
-        // @ts-ignore
-        const detail = ev.detail || {};
-        const id = detail.id;
-        const isLiked = !!detail.liked;
-        setLiked(prev => {
-          const n = new Set(prev);
-          if (isLiked) n.add(id); else n.delete(id);
-          return n;
-        });
-      } catch {}
-    };
-
-    window.addEventListener('storage', onStorage);
-    window.addEventListener('discover:saved', onSaved as EventListener);
-    window.addEventListener('discover:liked', onLiked as EventListener);
-
-    return () => {
-      window.removeEventListener('storage', onStorage);
-      window.removeEventListener('discover:saved', onSaved as EventListener);
-      window.removeEventListener('discover:liked', onLiked as EventListener);
-    };
-  }, []);
-
-  // Filter via query param `category`
-  const location = useLocation();
-  const [filterCategory, setFilterCategory] = useState<string | null>(null);
-
-  useEffect(() => {
-    try {
-      const params = new URLSearchParams(location.search);
-      const cat = params.get('category');
-      setFilterCategory(cat ? cat : null);
-    } catch {
-      setFilterCategory(null);
-    }
-  }, [location.search]);
 
   const toggleLike = (id: string) => {
     setLiked(prev => {
@@ -185,170 +225,183 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
     });
   };
 
-  // Details modal
-  const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<FeedItem | null>(null);
-  const openDetails = (item: FeedItem) => { setSelected(item); setOpen(true); };
-  const closeDetails = () => setOpen(false);
+  // Scroll handling for video switching
+  const handleScroll = useCallback(() => {
+    if (!containerRef.current) return;
+    
+    const container = containerRef.current;
+    const scrollTop = container.scrollTop;
+    const itemHeight = window.innerHeight - 120; // Account for header/nav
+    const newIndex = Math.round(scrollTop / itemHeight);
+    
+    if (newIndex !== currentVideoIndex && newIndex >= 0 && newIndex < feed.length) {
+      setCurrentVideoIndex(newIndex);
+    }
+  }, [currentVideoIndex, feed.length]);
 
-  // Lightweight animation: apply a static slide-up animation class.
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.addEventListener('scroll', handleScroll);
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  const formatNumber = (num?: number) => {
+    if (!num) return '0';
+    if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
+    if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
+    return num.toString();
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="h-screen bg-black flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16">
-            <div className="flex items-center gap-2 sm:gap-4">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
-                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+      <header className="bg-black/80 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-14">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-[#8B1538] rounded-lg flex items-center justify-center">
+                <MapPin className="h-4 w-4 text-white" />
               </div>
-              <h2 className="text-[#8B1538] text-lg sm:text-xl">{t('discover.title')}</h2>
+              <h2 className="text-white text-lg font-semibold">{t('discover.title')}</h2>
             </div>
 
-            <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
+            <div className="flex items-center gap-2">
               <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
-              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
-                <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/10">
+                <Bell className="h-4 w-4" />
               </Button>
-              <div className="hidden md:block">
-                <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
-                  <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
-                </Button>
-              </div>
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-white hover:bg-white/10">
+                <Settings className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Feed */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
-        <div className="max-w-md mx-auto space-y-4">
-  {feed.filter(item => !filterCategory || (item.category || '').toLowerCase() === (filterCategory || '').toLowerCase()).map((item) => {
+      {/* Video Feed */}
+      <div 
+        ref={containerRef}
+        className="flex-1 overflow-y-auto snap-y snap-mandatory scrollbar-hide"
+        style={{ scrollBehavior: 'smooth' }}
+      >
+        {feed.map((item, index) => {
           const Icon = iconFor[item.type];
           const isLiked = liked.has(item.id);
           const isSaved = saved.has(item.id);
+          const isActive = index === currentVideoIndex;
+
           return (
-            <div key={item.id} className="transition-all animate-slide-up">
-              <Card className="bg-white hover:shadow-lg transition-shadow overflow-hidden group cursor-pointer rounded-xl" onClick={() => openDetails(item)}>
-              {item.imageUrl && (
-                <div className="relative w-full h-44 sm:h-56 md:h-64 overflow-hidden">
-                  <img
-                    src={item.imageUrl}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-3 left-3">
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-background/80 backdrop-blur-sm shadow-sm">
-                      <Icon className="w-3.5 h-3.5" />
-                      <span className="capitalize">{item.category}</span>
+            <div 
+              key={item.id} 
+              className="relative w-full snap-start snap-always"
+              style={{ height: 'calc(100vh - 120px)' }}
+            >
+              {/* Video Player */}
+              {item.videoUrl && (
+                <VideoPlayer
+                  item={item}
+                  isActive={isActive}
+                  onTogglePlay={() => {}}
+                  onToggleMute={() => {}}
+                />
+              )}
+
+              {/* Content Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+              
+              {/* Category Badge */}
+              <div className="absolute top-4 left-4 pointer-events-auto">
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-black/50 text-white backdrop-blur-sm">
+                  <Icon className="w-3.5 h-3.5" />
+                  <span className="capitalize">{item.category}</span>
+                </span>
+              </div>
+
+              {/* Right Side Actions */}
+              <div className="absolute right-4 bottom-20 flex flex-col gap-4 pointer-events-auto">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className={cn(
+                    "h-12 w-12 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm",
+                    isLiked ? "text-red-500" : "text-white"
+                  )}
+                  onClick={() => toggleLike(item.id)}
+                >
+                  <Heart className={cn("w-6 h-6", isLiked ? "fill-red-500" : "")} />
+                </Button>
+                <div className="text-white text-xs text-center font-medium">
+                  {formatNumber(item.likes)}
+                </div>
+
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-12 w-12 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm"
+                  onClick={() => {}}
+                >
+                  <MessageCircle className="w-6 h-6" />
+                </Button>
+                <div className="text-white text-xs text-center font-medium">
+                  {Math.floor(Math.random() * 50)}
+                </div>
+
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className={cn(
+                    "h-12 w-12 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm",
+                    isSaved ? "text-yellow-500" : "text-white"
+                  )}
+                  onClick={() => toggleSave(item.id)}
+                >
+                  <Bookmark className={cn("w-6 h-6", isSaved ? "fill-yellow-500" : "")} />
+                </Button>
+
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="h-12 w-12 rounded-full bg-black/50 hover:bg-black/70 text-white backdrop-blur-sm"
+                  onClick={() => {}}
+                >
+                  <Share className="w-6 h-6" />
+                </Button>
+              </div>
+
+              {/* Bottom Content */}
+              <div className="absolute bottom-4 left-4 right-20 pointer-events-auto">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-[#8B1538] rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">
+                        {item.author?.charAt(0) || 'Q'}
+                      </span>
+                    </div>
+                    <span className="text-white font-medium text-sm">
+                      {item.author || 'QIC'}
                     </span>
                   </div>
-                </div>
-              )}
-              <CardHeader className="flex flex-row items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  {!item.imageUrl && (
-                    <div className={`w-10 h-10 rounded-md flex items-center justify-center ${colorFor[item.type]}`}>
-                      <Icon className="w-5 h-5" />
-                    </div>
-                  )}
-                  <div>
-                    <CardTitle className="text-base">{item.title}</CardTitle>
-                    {item.meta && <CardDescription>{item.meta}</CardDescription>}
-                    {!item.meta && <CardDescription className="capitalize">{item.category}</CardDescription>}
+                  
+                  <h3 className="text-white font-semibold text-lg leading-tight">
+                    {item.title}
+                  </h3>
+                  
+                  <p className="text-white/90 text-sm leading-relaxed">
+                    {item.description}
+                  </p>
+
+                  <div className="flex items-center gap-4 text-white/70 text-xs">
+                    <span>{formatNumber(item.views)} views</span>
+                    {item.duration && <span>{item.duration}s</span>}
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    type="button"
-                    size="icon"
-                    variant="ghost"
-                    className={cn("h-8 w-8", isLiked ? "text-red-500" : "text-muted-foreground")}
-                    onClick={(e) => { e.stopPropagation(); toggleLike(item.id); }}
-                    aria-label={isLiked ? t('discover.unlike') : t('discover.like')}
-                  >
-                    <Heart className={cn("w-4 h-4", isLiked ? "fill-red-500" : "")} />
-                  </Button>
-                  <Button
-                    type="button"
-                    size="icon"
-                    variant="ghost"
-                    className={cn("h-8 w-8", isSaved ? "text-primary" : "text-muted-foreground")}
-                    onClick={(e) => { e.stopPropagation(); toggleSave(item.id); 
-                      try { window.dispatchEvent(new CustomEvent('discover:saved', { detail: { id: item.id, saved: !isSaved } })); } catch {}
-                    }}
-                    aria-label={isSaved ? t('discover.unsave') : t('discover.save')}
-                  >
-                    <Bookmark className={cn("w-4 h-4", isSaved ? "fill-current" : "")} />
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-2 pb-5">
-                <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
-              </CardContent>
-              {(item.actionLabel || item.actionHref) && (
-                <CardFooter className="pt-0">
-                  <div className="flex w-full items-center gap-2">
-                    <Button size="sm" className="bg-[#8B1538] hover:bg-[#6D1028]" onClick={(e) => { e.stopPropagation(); openDetails(item); }}>
-                      {item.actionLabel || t('discover.view')}
-                    </Button>
-                    {item.actionHref && (
-                      <Button asChild size="sm" variant="outline" onClick={(e) => e.stopPropagation()}>
-                        <a href={item.actionHref} target="_blank" rel="noreferrer">
-                          <ExternalLink className="mr-1 h-4 w-4" />
-                          {t('discover.link')}
-                        </a>
-                      </Button>
-                    )}
-                  </div>
-                </CardFooter>
-              )}
-              </Card>
+              </div>
             </div>
           );
         })}
-        </div>
-      </main>
-
-      {/* Details Modal */}
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-lg">
-          {selected && (
-            <>
-              <DialogHeader>
-                <DialogTitle>{selected.title}</DialogTitle>
-                <DialogDescription className="capitalize">{selected.category}</DialogDescription>
-              </DialogHeader>
-              {selected.imageUrl && (
-                <div className="rounded-md overflow-hidden">
-                  <img src={selected.imageUrl} alt={selected.title} className="w-full max-h-72 object-cover" />
-                </div>
-              )}
-              <div className="text-sm text-card-foreground/90 leading-relaxed">
-                {selected.description}
-              </div>
-              <DialogFooter className="gap-2">
-                <Button variant="outline" onClick={() => { toggleSave(selected.id); }}>
-                  <Bookmark className="mr-2 h-4 w-4" /> {saved.has(selected.id) ? t('discover.saved') : t('discover.save')}
-                </Button>
-                <Button onClick={() => { toggleLike(selected.id); }}>
-                  <Heart className="mr-2 h-4 w-4" /> {liked.has(selected.id) ? t('discover.liked') : t('discover.like')}
-                </Button>
-                {selected.actionHref && (
-                  <Button asChild>
-                    <a href={selected.actionHref} target="_blank" rel="noreferrer">
-                      {t('discover.open_link')}
-                    </a>
-                  </Button>
-                )}
-                <Button variant="ghost" onClick={closeDetails}>{t('discover.close')}</Button>
-              </DialogFooter>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
+      </div>
 
       <BottomNav />
     </div>
