@@ -148,7 +148,8 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
     setIsLoading(true);
 
     try {
-      const stream = chatService.sendMessageStream(message);
+      const limitedMessage = `${message}\n\nPlease keep your response to a maximum of 500 characters.`;
+      const stream = chatService.sendMessageStream(limitedMessage);
       for await (const chunk of stream) {
         setMessages((prev) => {
           const newMsgs = [...prev];
@@ -232,7 +233,9 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
 • Duration and time requirements
 • Any special considerations or requirements
 
-Format your response with clear sections and bullet points for easy reading.`;
+Format your response with clear sections and bullet points for easy reading.
+
+Please keep your response to a maximum of 500 characters.`;
       
       const stream = chatService.sendMessageStream(familyPrompt);
       setMessages((prev) => [...prev, { sender: "model", content: "", isStreaming: true }]);
@@ -280,7 +283,9 @@ Format your response with clear sections and bullet points for easy reading.`;
 • Budget estimates for different trip types
 • Safety and preparation checklist
 
-Format your response with clear sections and actionable advice.`;
+Format your response with clear sections and actionable advice.
+
+Please keep your response to a maximum of 500 characters.`;
       
       const stream = chatService.sendMessageStream(travelPrompt);
       setMessages((prev) => [...prev, { sender: "model", content: "", isStreaming: true }]);
@@ -329,7 +334,9 @@ Format your response with clear sections and actionable advice.`;
 • Steps to take after an accident
 • How to save money on premiums
 
-Format your response with clear sections and practical advice.`;
+Format your response with clear sections and practical advice.
+
+Please keep your response to a maximum of 500 characters.`;
       
       const stream = chatService.sendMessageStream(insurancePrompt);
       setMessages((prev) => [...prev, { sender: "model", content: "", isStreaming: true }]);
@@ -364,9 +371,9 @@ Format your response with clear sections and practical advice.`;
 
   // ---- UI ----
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="h-screen bg-gray-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50 flex-shrink-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             <div className="flex items-center gap-2 sm:gap-4">
@@ -391,8 +398,10 @@ Format your response with clear sections and practical advice.`;
         </div>
       </header>
 
-      <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 overflow-y-auto pb-24">
-        <div className="max-w-md mx-auto">
+      {/* Main Content Area - Scrollable */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 pb-32">
+          <div className="max-w-md mx-auto">
           {/* Family Activities Feature Card */}
           <Card className="mb-4 bg-gradient-to-r from-[#6568F4]/5 to-[#6568F4]/5 border-[#6568F4]/20">
             <div className="p-4">
@@ -474,17 +483,20 @@ Format your response with clear sections and practical advice.`;
             </div>
           </Card>
 
+          {/* Messages Area */}
           {messages.length > 0 && (
             <div className="space-y-4 mt-4">
               {messages.map((msg, i) => (
                 <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                  <Card className={`p-4 max-w-[80%] ${msg.sender === "user" ? "bg-primary text-primary-foreground" : "bg-card"}`}>
-                    <div className="text-sm whitespace-pre-wrap leading-relaxed">
+                  <Card className={`p-3 sm:p-4 max-w-[85%] sm:max-w-[80%] ${msg.sender === "user" ? "bg-primary text-primary-foreground" : "bg-card"}`}>
+                    <div className="text-sm whitespace-pre-wrap leading-relaxed break-words">
                       <div 
-                        className="prose prose-sm max-w-none prose-headings:text-inherit prose-p:text-inherit prose-strong:text-inherit prose-ul:text-inherit prose-li:text-inherit"
+                        className="prose prose-sm max-w-none prose-headings:text-inherit prose-p:text-inherit prose-strong:text-inherit prose-ul:text-inherit prose-li:text-inherit prose-ol:text-inherit"
                         style={{ 
                           color: 'inherit',
-                          lineHeight: '1.6'
+                          lineHeight: '1.6',
+                          wordBreak: 'break-word',
+                          overflowWrap: 'break-word'
                         }}
                       >
                         {msg.content}
@@ -497,7 +509,7 @@ Format your response with clear sections and practical advice.`;
                       <div className="mt-2 space-y-2">
                         {msg.groundingChunks.map((chunk, idx) => (
                           <div key={idx} className="p-2 border rounded-lg">
-                            <a href={chunk.maps.uri} target="_blank" className="text-primary font-semibold hover:underline">
+                            <a href={chunk.maps.uri} target="_blank" className="text-primary font-semibold hover:underline break-words">
                               {chunk.maps.title}
                             </a>
                             <Button size="sm" className="w-full mt-2" onClick={() => handleBookService(chunk.maps.title)}>
@@ -513,37 +525,39 @@ Format your response with clear sections and practical advice.`;
               <div ref={messagesEndRef} />
             </div>
           )}
+          </div>
         </div>
       </div>
 
-      <div className="fixed bottom-16 left-0 right-0 bg-white border-t border-gray-200 p-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Input Area - Fixed at bottom */}
+      <div className="flex-shrink-0 bg-white border-t border-gray-200 p-4 pb-20">
+        <div className="max-w-7xl mx-auto px-0 sm:px-6 lg:px-8">
           <div className="max-w-md mx-auto flex gap-2 items-center">
-          <Button onClick={handleFindGarages} disabled={isLoading || isVoiceActive} variant="outline" size="icon">
-            <MapPin className="w-4 h-4" />
-          </Button>
-          <Button
-            onClick={isVoiceActive ? handleStopVoice : handleStartVoice}
-            disabled={isLoading}
-            size="icon"
-            className={isVoiceActive ? "bg-red-500 hover:bg-red-600" : ""}
-          >
-            <Mic className="w-4 h-4" />
-          </Button>
-          <Input
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder={isVoiceActive ? t('chat.connecting') : t('chat.placeholder')}
-            className="flex-1"
-            disabled={isLoading || isVoiceActive}
-            onKeyDown={(e) => e.key === "Enter" && handleSend()}
-          />
-          <Button onClick={handleSend} size="icon" disabled={isLoading || isVoiceActive}>
-            <Send className="w-4 h-4" />
-          </Button>
+            <Button onClick={handleFindGarages} disabled={isLoading || isVoiceActive} variant="outline" size="icon" className="flex-shrink-0">
+              <MapPin className="w-4 h-4" />
+            </Button>
+            <Button
+              onClick={isVoiceActive ? handleStopVoice : handleStartVoice}
+              disabled={isLoading}
+              size="icon"
+              className={`flex-shrink-0 ${isVoiceActive ? "bg-red-500 hover:bg-red-600" : ""}`}
+            >
+              <Mic className="w-4 h-4" />
+            </Button>
+            <Input
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder={isVoiceActive ? t('chat.connecting') : t('chat.placeholder')}
+              className="flex-1 min-w-0"
+              disabled={isLoading || isVoiceActive}
+              onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            />
+            <Button onClick={handleSend} size="icon" disabled={isLoading || isVoiceActive} className="flex-shrink-0">
+              <Send className="w-4 h-4" />
+            </Button>
           </div>
+          {voiceError && <p className="text-red-500 text-center mt-2 text-sm">{voiceError}</p>}
         </div>
-        {voiceError && <p className="text-red-500 text-center mt-2 text-sm">{voiceError}</p>}
       </div>
 
       <BottomNav />
