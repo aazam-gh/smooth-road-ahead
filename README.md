@@ -6,6 +6,8 @@ Your personal lifestyle companion for discovering, planning, and enjoying life i
 
 Qatar Insurance Lifestyle is a comprehensive lifestyle application designed specifically for Qatar residents. The app combines AI-powered recommendations, personalized planning tools, and insurance management features to enhance your daily life experience in Qatar.
 
+Note: For a comprehensive, end-to-end product and technical overview (user flows, architecture, data model, i18n, AI, and more), see docs/APP_DOCUMENTATION.md.
+
 ## Key Features
 
 ### 🎯 Smart Lifestyle Recommendations
