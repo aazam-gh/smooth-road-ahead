@@ -8,6 +8,8 @@ export interface DiscoverApiItem {
   description: string;
   image?: string;
   link?: string;
+  // optional metadata for personalization
+  publishedAt?: string; // ISO date
 }
 
 export const mockDiscoverData: DiscoverApiItem[] = [
@@ -17,6 +19,7 @@ export const mockDiscoverData: DiscoverApiItem[] = [
     title: "Cars & Coffee – West Bay",
     description: "Join fellow enthusiasts this Friday from 8–11am. Free entry, family friendly.",
     image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=1200&auto=format&fit=crop",
+    publishedAt: "2025-10-25T08:00:00.000Z",
     link: "#event-1",
   },
   {
@@ -25,6 +28,7 @@ export const mockDiscoverData: DiscoverApiItem[] = [
     title: "20% off AC Service",
     description: "Stay cool. Limited-time offer at select partner garages. Book by the end of this week.",
     image: "https://images.unsplash.com/photo-1542362567-b07e54358753?q=80&w=1200&auto=format&fit=crop",
+    publishedAt: "2025-11-01T09:00:00.000Z",
     link: "#offer-1",
   },
   {
@@ -33,6 +37,7 @@ export const mockDiscoverData: DiscoverApiItem[] = [
     title: "Summer Heat Tip",
     description: "Check coolant levels monthly and park in shade to reduce thermal stress on the battery.",
     link: "#tip-1",
+    publishedAt: "2025-09-20T07:00:00.000Z",
   },
   {
     id: "4",
@@ -40,6 +45,7 @@ export const mockDiscoverData: DiscoverApiItem[] = [
     title: "From QIC Daily AI",
     description: "Based on your last service, consider an air filter inspection in ~1,200 miles.",
     link: "#ai-1",
+    publishedAt: "2025-10-28T06:00:00.000Z",
   },
   {
     id: "5",
@@ -47,6 +53,7 @@ export const mockDiscoverData: DiscoverApiItem[] = [
     title: "Insurance Renewal",
     description: "Your policy is up for renewal in 12 days. Review your coverage or renew now.",
     link: "#reminder-1",
+    publishedAt: "2025-10-15T06:00:00.000Z",
   },
   {
     id: "6",
@@ -54,6 +61,7 @@ export const mockDiscoverData: DiscoverApiItem[] = [
     title: "Free Tire Check",
     description: "Stop by any partner to get a complimentary tire health check this weekend.",
     image: "https://images.unsplash.com/photo-1511715280715-1f2b3b749875?q=80&w=1200&auto=format&fit=crop",
+    publishedAt: "2025-10-30T12:00:00.000Z",
     link: "#offer-2",
   },
 ];
