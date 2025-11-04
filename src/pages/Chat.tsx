@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Send, Bot, MapPin, Mic } from "lucide-react";
+import { Send, Bot, MapPin, Mic, Bell, Settings } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
 import Header from "@/components/Header";
 import { chatService, getMapsGroundedResponse } from "../lib/geminiService";
 import { GoogleGenAI, Modality, LiveServerMessage, Blob as GenBlob } from "@google/genai";
 import { encode } from "../lib/audio";
 import { useI18n } from "@/lib/i18n";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { LanguageCode } from "../../types";
 
 interface ChatProps {
@@ -214,15 +215,35 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
 
   // ---- UI ----
   return (
-    <div className="min-h-screen bg-background pb-32 flex flex-col">
-      <Header 
-        title={t('chat.title')} 
-        onLanguageChange={onLanguageChange}
-        currentLang={currentLang}
-        showProfileButton={true}
-      />
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+              </div>
+              <h2 className="text-[#8B1538] text-lg sm:text-xl truncate">{t('chat.title')}</h2>
+            </div>
 
-      <div className="flex-1 max-w-md mx-auto w-full px-6 py-4 overflow-y-auto">
+            <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
+              <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
+              </Button>
+              <div className="hidden md:block">
+                <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                  <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-4 overflow-y-auto">
+        <div className="max-w-md mx-auto">
         <div className="space-y-4">
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
@@ -247,10 +268,12 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
           ))}
           <div ref={messagesEndRef} />
         </div>
+        </div>
       </div>
 
-      <div className="fixed bottom-16 left-0 right-0 bg-background border-t border-border p-4">
-        <div className="max-w-md mx-auto flex gap-2 items-center">
+      <div className="fixed bottom-16 left-0 right-0 bg-white border-t border-gray-200 p-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-md mx-auto flex gap-2 items-center">
           <Button onClick={handleFindGarages} disabled={isLoading || isVoiceActive} variant="outline" size="icon">
             <MapPin className="w-4 h-4" />
           </Button>
@@ -273,6 +296,7 @@ const Chat = ({ onLanguageChange, currentLang }: ChatProps) => {
           <Button onClick={handleSend} size="icon" disabled={isLoading || isVoiceActive}>
             <Send className="w-4 h-4" />
           </Button>
+          </div>
         </div>
         {voiceError && <p className="text-red-500 text-center mt-2 text-sm">{voiceError}</p>}
       </div>

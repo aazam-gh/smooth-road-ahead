@@ -1,8 +1,9 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import BottomNav from "@/components/BottomNav";
 import Header from "@/components/Header";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Tag, Lightbulb, Bot, Bell, Car, Heart, Bookmark, ExternalLink } from "lucide-react";
+import { Calendar, Tag, Lightbulb, Bot, Bell, Car, Heart, Bookmark, ExternalLink, MapPin, Settings } from "lucide-react";
 import { LanguageCode } from "../../types";
 import { Button } from "@/components/ui/button";
 import { useEffect, useMemo, useState } from "react";
@@ -190,23 +191,43 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
   // Lightweight animation: apply a static slide-up animation class.
 
   return (
-    <div className="min-h-screen bg-background pb-20 flex flex-col">
-      <Header 
-        title="Discover" 
-        onLanguageChange={onLanguageChange}
-        currentLang={currentLang}
-        showProfileButton={true}
-      />
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+              </div>
+              <h2 className="text-[#8B1538] text-lg sm:text-xl">Discover</h2>
+            </div>
+
+            <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
+              <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
+              </Button>
+              <div className="hidden md:block">
+                <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                  <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
       {/* Feed */}
-      <div className="max-w-md mx-auto w-full px-6 py-6 space-y-4">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+        <div className="max-w-md mx-auto space-y-4">
   {feed.filter(item => !filterCategory || (item.category || '').toLowerCase() === (filterCategory || '').toLowerCase()).map((item) => {
           const Icon = iconFor[item.type];
           const isLiked = liked.has(item.id);
           const isSaved = saved.has(item.id);
           return (
             <div key={item.id} className="transition-all animate-slide-up">
-              <Card className="bg-card shadow-card hover:shadow-elevated transition-shadow overflow-hidden group cursor-pointer rounded-xl ring-1 ring-transparent hover:ring-border" onClick={() => openDetails(item)}>
+              <Card className="bg-white hover:shadow-lg transition-shadow overflow-hidden group cursor-pointer rounded-xl" onClick={() => openDetails(item)}>
               {item.imageUrl && (
                 <div className="relative w-full h-44 sm:h-56 md:h-64 overflow-hidden">
                   <img
@@ -262,12 +283,12 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
                 </div>
               </CardHeader>
               <CardContent className="pt-2 pb-5">
-                <p className="text-sm text-card-foreground/90 leading-relaxed">{item.description}</p>
+                <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
               </CardContent>
               {(item.actionLabel || item.actionHref) && (
                 <CardFooter className="pt-0">
                   <div className="flex w-full items-center gap-2">
-                    <Button size="sm" onClick={(e) => { e.stopPropagation(); openDetails(item); }}>
+                    <Button size="sm" className="bg-[#8B1538] hover:bg-[#6D1028]" onClick={(e) => { e.stopPropagation(); openDetails(item); }}>
                       {item.actionLabel || "View"}
                     </Button>
                     {item.actionHref && (
@@ -285,7 +306,8 @@ const DiscoverFeed = ({ onLanguageChange, currentLang }: DiscoverFeedProps) => {
             </div>
           );
         })}
-      </div>
+        </div>
+      </main>
 
       {/* Details Modal */}
       <Dialog open={open} onOpenChange={setOpen}>

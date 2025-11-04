@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { LanguageCode } from '../../types';
+import { useI18n } from '@/lib/i18n';
 
 interface NewDashboardProps {
   currentLang: LanguageCode;
@@ -35,6 +36,7 @@ interface NewDashboardProps {
 }
 
 export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProps) {
+  const { t } = useI18n();
   const userName = 'Ahmed'
   const userPreferences = {
     foodPreferences: ['international', 'vegetarian'],
@@ -53,24 +55,24 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
     {
       id: 1,
       time: '09:00 AM',
-      title: 'Team Meeting',
-      location: 'Office - West Bay',
+      title: t('newdashboard.team_meeting'),
+      location: t('newdashboard.office_west_bay'),
       type: 'work',
       icon: Calendar
     },
     {
       id: 2,
       time: '01:00 PM',
-      title: 'Lunch at Parisa',
-      location: 'Souq Waqif',
+      title: t('newdashboard.lunch_at_parisa'),
+      location: t('newdashboard.souq_waqif'),
       type: 'dining',
       icon: Utensils
     },
     {
       id: 3,
       time: '06:30 PM',
-      title: 'Gym Session',
-      location: 'Aspire Zone',
+      title: t('newdashboard.gym_session'),
+      location: t('newdashboard.aspire_zone'),
       type: 'fitness',
       icon: Dumbbell
     }
@@ -80,45 +82,45 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
   const planSuggestions = [
     {
       id: 1,
-      category: 'Health & Fitness',
+      category: t('newdashboard.health_fitness'),
       icon: Dumbbell,
       color: 'bg-green-500',
       suggestions: [
-        { name: 'Morning Yoga', time: '7:00 AM', location: 'Aspire Park' },
-        { name: 'Evening Run', time: '5:30 PM', location: 'Corniche' }
+        { name: t('newdashboard.morning_yoga'), time: '7:00 AM', location: t('newdashboard.aspire_park') },
+        { name: t('newdashboard.evening_run'), time: '5:30 PM', location: t('newdashboard.corniche') }
       ],
       visible: userPreferences.activityPreferences.includes('sports')
     },
     {
       id: 2,
-      category: 'Dining',
+      category: t('newdashboard.dining'),
       icon: Utensils,
-      color: 'bg-orange-500',
+      color: 'bg-primary',
       suggestions: [
-        { name: 'Lunch Special', time: '12:30 PM', location: 'Al Mourjan' },
-        { name: 'Dinner Reservation', time: '8:00 PM', location: 'IDAM by Alain Ducasse' }
+        { name: t('newdashboard.lunch_special'), time: '12:30 PM', location: t('newdashboard.al_mourjan') },
+        { name: t('newdashboard.dinner_reservation'), time: '8:00 PM', location: t('newdashboard.idam_restaurant') }
       ],
       visible: userPreferences.foodPreferences.length > 0
     },
     {
       id: 3,
-      category: 'Outings',
+      category: t('newdashboard.outings'),
       icon: Camera,
       color: 'bg-purple-500',
       suggestions: [
-        { name: 'Museum Visit', time: '10:00 AM', location: 'Museum of Islamic Art' },
-        { name: 'Gallery Opening', time: '7:00 PM', location: 'Katara Cultural Village' }
+        { name: t('newdashboard.museum_visit'), time: '10:00 AM', location: t('newdashboard.museum_islamic_art') },
+        { name: t('newdashboard.gallery_opening'), time: '7:00 PM', location: t('newdashboard.katara_cultural') }
       ],
       visible: userPreferences.activityPreferences.includes('art')
     },
     {
       id: 4,
-      category: 'Shopping',
+      category: t('newdashboard.shopping'),
       icon: ShoppingBag,
       color: 'bg-pink-500',
       suggestions: [
-        { name: 'Weekend Sale', time: 'All Day', location: 'Villaggio Mall' },
-        { name: 'New Collection', time: '2:00 PM', location: 'Place Vendôme' }
+        { name: t('newdashboard.weekend_sale'), time: t('newdashboard.all_day'), location: t('newdashboard.villaggio_mall') },
+        { name: t('newdashboard.new_collection'), time: '2:00 PM', location: t('newdashboard.place_vendome') }
       ],
       visible: userPreferences.activityPreferences.includes('shopping')
     }
@@ -128,18 +130,18 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
   const personalizedOffers = [
     {
       id: 1,
-      title: '30% Off at Turkish Cuisine',
-      description: 'Exclusive dinner offer at Istanbul Restaurant',
+      title: t('newdashboard.turkish_cuisine'),
+      description: t('newdashboard.turkish_desc'),
       image: 'https://images.unsplash.com/photo-1731941465921-eb4285693713?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXN0YXVyYW50JTIwZmluZSUyMGRpbmluZ3xlbnwxfHx8fDE3NjIyMzgyMTh8MA&ixlib=rb-4.1.0&q=80&w=1080',
-      category: 'Dining',
+      category: t('newdashboard.dining'),
       validUntil: 'Nov 30',
       discount: '30%',
       visible: userPreferences.foodPreferences.includes('international') || userPreferences.foodPreferences.includes('mediterranean')
     },
     {
       id: 2,
-      title: 'Fitness Class Bundle',
-      description: '3 months membership at premium rates',
+      title: t('newdashboard.fitness_bundle'),
+      description: t('newdashboard.fitness_desc'),
       image: 'https://images.unsplash.com/photo-1758599879463-58aad7d947f3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx5b2dhJTIwZml0bmVzcyUyMHdvcmtvdXR8ZW58MXx8fHwxNzYyMjA5MTM1fDA&ixlib=rb-4.1.0&q=80&w=1080',
       category: 'Fitness',
       validUntil: 'Dec 15',
@@ -148,8 +150,8 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
     },
     {
       id: 3,
-      title: 'Art Exhibition Pass',
-      description: 'Free entry to all galleries this month',
+      title: t('newdashboard.art_exhibition'),
+      description: t('newdashboard.art_desc'),
       image: 'https://images.unsplash.com/photo-1706665714936-3211c96474c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnQlMjBleGhpYml0aW9uJTIwbXVzZXVtfGVufDF8fHx8MTc2MjI0NTY0N3ww&ixlib=rb-4.1.0&q=80&w=1080',
       category: 'Culture',
       validUntil: 'Nov 25',
@@ -158,18 +160,18 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
     },
     {
       id: 4,
-      title: 'Luxury Shopping Event',
-      description: 'VIP access to exclusive brands',
+      title: t('newdashboard.luxury_shopping'),
+      description: t('newdashboard.luxury_desc'),
       image: 'https://images.unsplash.com/photo-1739523914934-353bb8f39d0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaG9wcGluZyUyMG1hbGwlMjBsdXh1cnl8ZW58MXx8fHwxNzYyMTc2MTkxfDA&ixlib=rb-4.1.0&q=80&w=1080',
-      category: 'Shopping',
+      category: t('newdashboard.shopping'),
       validUntil: 'Dec 5',
       discount: '50%',
       visible: userPreferences.activityPreferences.includes('shopping')
     },
     {
       id: 5,
-      title: 'Beach Activities Pass',
-      description: 'Water sports and beach access included',
+      title: t('newdashboard.beach_activities'),
+      description: t('newdashboard.beach_desc'),
       image: 'https://images.unsplash.com/photo-1602477684116-3216b681e262?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxvdXRkb29yJTIwYmVhY2glMjBhY3Rpdml0aWVzfGVufDF8fHx8MTc2MjI0NTY0OHww&ixlib=rb-4.1.0&q=80&w=1080',
       category: 'Outdoor',
       validUntil: 'Dec 20',
@@ -178,8 +180,8 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
     },
     {
       id: 6,
-      title: 'Healthy Bowl Special',
-      description: 'Organic meals delivered fresh daily',
+      title: t('newdashboard.healthy_bowl'),
+      description: t('newdashboard.healthy_desc'),
       image: 'https://images.unsplash.com/photo-1572319216151-4fb52730dc68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoZWFsdGh5JTIwbWVhbCUyMGJvd2x8ZW58MXx8fHwxNzYyMjQ1NjQ2fDA&ixlib=rb-4.1.0&q=80&w=1080',
       category: 'Health',
       validUntil: 'Nov 28',
@@ -193,27 +195,29 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
-                <MapPin className="h-5 w-5 text-white" />
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               </div>
-              <h2 className="text-[#8B1538]">QIC</h2>
+              <h2 className="text-[#8B1538] text-lg sm:text-xl">QIC</h2>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
               <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
-              <Button variant="ghost" size="icon">
-                <Search className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                <Search className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
-              <Button variant="ghost" size="icon">
-                <Bell className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
-              <Button variant="ghost" size="icon">
-                <Settings className="h-5 w-5" />
-              </Button>
-              <Avatar className="h-9 w-9 bg-[#8B1538]">
-                <div className="flex items-center justify-center h-full w-full text-white">
+              <div className="hidden md:block">
+                <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                  <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
+                </Button>
+              </div>
+              <Avatar className="h-7 w-7 sm:h-9 sm:w-9 bg-[#8B1538]">
+                <div className="flex items-center justify-center h-full w-full text-white text-sm sm:text-base">
                   {userName.charAt(0).toUpperCase()}
                 </div>
               </Avatar>
@@ -226,7 +230,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
-          <h1 className="mb-2">Welcome back, {userName.split(' ')[0]}!</h1>
+          <h1 className="mb-2">{t('newdashboard.welcome_back')}, {userName.split(' ')[0]}!</h1>
           <p className="text-gray-600">{formattedDate}</p>
         </div>
 
@@ -239,7 +243,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
               <Card className="p-6 bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <p className="text-blue-100 text-sm mb-1">Current Weather</p>
+                    <p className="text-blue-100 text-sm mb-1">{t('newdashboard.current_weather')}</p>
                     <h2 className="text-white">28°C</h2>
                   </div>
                   <Sun className="h-12 w-12 text-yellow-300" />
@@ -247,7 +251,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm">
                     <Cloud className="h-4 w-4" />
-                    <span>Partly Cloudy</span>
+                    <span>{t('newdashboard.partly_cloudy')}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <MapPin className="h-4 w-4" />
@@ -260,7 +264,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
               <Card className="p-6 bg-gradient-to-br from-[#8B1538] to-[#6D1028] text-white border-0">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <p className="text-white/80 text-sm mb-1">Traffic to Office</p>
+                    <p className="text-white/80 text-sm mb-1">{t('newdashboard.traffic_to_office')}</p>
                     <h2 className="text-white">15 min</h2>
                   </div>
                   <Car className="h-12 w-12 text-white/90" />
@@ -268,7 +272,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm">
                     <TrendingUp className="h-4 w-4" />
-                    <span>Light traffic</span>
+                    <span>{t('newdashboard.light_traffic')}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Navigation className="h-4 w-4" />
@@ -281,10 +285,10 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
             {/* Today's Plans */}
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3>Today's Plans</h3>
+                <h3>{t('newdashboard.todays_plans')}</h3>
                 <Button size="sm" className="bg-[#8B1538] hover:bg-[#6D1028]">
                   <Plus className="h-4 w-4 mr-2" />
-                  Add Plan
+                  {t('newdashboard.add_plan')}
                 </Button>
               </div>
 
@@ -329,7 +333,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
 
             {/* Make Your Plans */}
             <Card className="p-6">
-              <h3 className="mb-6">Make Your Plans for Today</h3>
+              <h3 className="mb-6">{t('newdashboard.make_plans')}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {planSuggestions.map((category) => {
                   const Icon = category.icon;
@@ -356,7 +360,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                         </div>
                       </div>
                       <Button variant="outline" size="sm" className="w-full">
-                        Add to Plans
+                        {t('newdashboard.add_to_plans')}
                       </Button>
                     </Card>
                   );
@@ -368,11 +372,11 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
             <Card className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3>Personalized Offers</h3>
-                  <p className="text-sm text-gray-600 mt-1">Based on your preferences</p>
+                  <h3>{t('newdashboard.personalized_offers')}</h3>
+                  <p className="text-sm text-gray-600 mt-1">{t('newdashboard.based_on_preferences')}</p>
                 </div>
                 <Button variant="ghost" size="sm">
-                  View All
+                  {t('dashboard.view_all')}
                   <ChevronRight className="h-4 w-4 ml-1" />
                 </Button>
               </div>
@@ -399,9 +403,9 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                       <h4 className="mb-1">{offer.title}</h4>
                       <p className="text-sm text-gray-600 mb-3">{offer.description}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-500">Valid until {offer.validUntil}</span>
+                        <span className="text-xs text-gray-500">{t('newdashboard.valid_until')} {offer.validUntil}</span>
                         <Button size="sm" className="bg-[#8B1538] hover:bg-[#6D1028]">
-                          Claim
+                          {t('newdashboard.claim')}
                         </Button>
                       </div>
                     </div>
@@ -415,11 +419,11 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
           <div className="space-y-6">
             {/* Quick Stats */}
             <Card className="p-6">
-              <h4 className="mb-4">Your Activity</h4>
+              <h4 className="mb-4">{t('newdashboard.your_activity')}</h4>
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-gray-600">Plans Completed</span>
+                    <span className="text-sm text-gray-600">{t('newdashboard.plans_completed')}</span>
                     <span className="text-sm">12/15</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
@@ -429,7 +433,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                 <Separator />
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-gray-600">Offers Claimed</span>
+                    <span className="text-sm text-gray-600">{t('newdashboard.offers_claimed')}</span>
                     <span className="text-sm">8</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
@@ -441,7 +445,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
 
             {/* Upcoming Events */}
             <Card className="p-6">
-              <h4 className="mb-4">Upcoming Events</h4>
+              <h4 className="mb-4">{t('newdashboard.upcoming_events')}</h4>
               <div className="space-y-4">
                 <div className="flex gap-3">
                   <div className="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-lg flex flex-col items-center justify-center">
@@ -449,19 +453,19 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                     <span className="text-purple-800">15</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm truncate">Art Exhibition</p>
-                    <p className="text-xs text-gray-500">Katara Cultural Village</p>
+                    <p className="text-sm truncate">{t('newdashboard.art_exhibition_event')}</p>
+                    <p className="text-xs text-gray-500">{t('newdashboard.katara_cultural')}</p>
                   </div>
                 </div>
                 <Separator />
                 <div className="flex gap-3">
-                  <div className="flex-shrink-0 w-12 h-12 bg-orange-100 rounded-lg flex flex-col items-center justify-center">
-                    <span className="text-xs text-orange-600">NOV</span>
-                    <span className="text-orange-800">20</span>
+                  <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex flex-col items-center justify-center">
+                    <span className="text-xs text-primary">NOV</span>
+                    <span className="text-primary font-medium">20</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm truncate">Food Festival</p>
-                    <p className="text-xs text-gray-500">Souq Waqif</p>
+                    <p className="text-sm truncate">{t('newdashboard.food_festival')}</p>
+                    <p className="text-xs text-gray-500">{t('newdashboard.souq_waqif')}</p>
                   </div>
                 </div>
                 <Separator />
@@ -471,8 +475,8 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                     <span className="text-blue-800">25</span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm truncate">Music Concert</p>
-                    <p className="text-xs text-gray-500">Qatar National Convention Centre</p>
+                    <p className="text-sm truncate">{t('newdashboard.music_concert')}</p>
+                    <p className="text-xs text-gray-500">{t('newdashboard.qatar_convention')}</p>
                   </div>
                 </div>
               </div>
@@ -480,19 +484,19 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
 
             {/* Quick Actions */}
             <Card className="p-6">
-              <h4 className="mb-4">Quick Actions</h4>
+              <h4 className="mb-4">{t('newdashboard.quick_actions')}</h4>
               <div className="space-y-2">
                 <Button variant="outline" className="w-full justify-start">
                   <Calendar className="h-4 w-4 mr-2" />
-                  View Full Calendar
+                  {t('newdashboard.view_calendar')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
                   <MapPin className="h-4 w-4 mr-2" />
-                  Explore Nearby
+                  {t('newdashboard.explore_nearby')}
                 </Button>
                 <Button variant="outline" className="w-full justify-start">
                   <Utensils className="h-4 w-4 mr-2" />
-                  Find Restaurants
+                  {t('newdashboard.find_restaurants')}
                 </Button>
               </div>
             </Card>

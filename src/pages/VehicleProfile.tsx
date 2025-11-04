@@ -16,9 +16,13 @@ import {
   Droplets,
   Battery,
   Edit,
+  MapPin,
+  Bell,
+  Settings,
 } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
 import Header from "@/components/Header";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { useI18n } from "@/lib/i18n";
 import { LanguageCode, VehicleProfile as VehicleProfileType } from "../../types";
 
@@ -135,44 +139,59 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
   ];
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      <Header 
-        title={`${vehicle.year} ${vehicle.make} ${vehicle.model}`} 
-        onLanguageChange={onLanguageChange}
-        currentLang={currentLang}
-        showProfileButton={true}
-      />
-      
-      {/* Vehicle Health Section */}
-      <div className="bg-gradient-to-br from-primary to-accent p-6 text-primary-foreground -mt-6">
-        <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-              <Car className="w-6 h-6" />
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center flex-shrink-0">
+                <Car className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+              </div>
+              <h2 className="text-[#8B1538] text-sm sm:text-lg md:text-xl truncate">{`${vehicle.year} ${vehicle.make} ${vehicle.model}`}</h2>
+            </div>
+
+            <div className="flex items-center gap-1 sm:gap-2 md:gap-4 flex-shrink-0">
+              <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
+              </Button>
+              <div className="hidden md:block">
+                <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                  <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
+                </Button>
+              </div>
             </div>
           </div>
-
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-3xl font-bold">{vehicle.health}%</span>
-            <TrendingUp className="w-5 h-5" />
-          </div>
-          <p className="text-sm opacity-90 mb-3">{t('dashboard.vehicle_health')}</p>
-          <Progress value={vehicle.health} className="h-2 bg-white/20" />
-
-          <div className="mt-4 flex items-center justify-between text-sm">
-            <span className="opacity-90">{t('vehicle.current_mileage')}</span>
-            <span className="font-semibold">{vehicle.mileage.toLocaleString()} mi</span>
-          </div>
         </div>
-      </div>
+      </header>
 
-      <div className="max-w-md mx-auto px-6 -mt-4">
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24">
+        {/* Vehicle Health Section */}
+        <Card className="p-6 bg-gradient-to-br from-[#8B1538] to-[#6D1028] text-white border-0 mb-6">
+          <div className="max-w-md mx-auto">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-3xl font-bold">{vehicle.health}%</span>
+              <TrendingUp className="w-5 h-5" />
+            </div>
+            <p className="text-sm text-white/80 mb-3">{t('dashboard.vehicle_health')}</p>
+            <Progress value={vehicle.health} className="h-2 bg-white/20" />
+
+            <div className="mt-4 flex items-center justify-between text-sm">
+              <span className="text-white/80">{t('vehicle.current_mileage')}</span>
+              <span className="font-semibold">{vehicle.mileage.toLocaleString()} mi</span>
+            </div>
+          </div>
+        </Card>
+
+        <div className="max-w-md mx-auto">
         {!showForm ? (
           <>
             {/* Upcoming Maintenance */}
-            <Card className="p-5 shadow-elevated bg-card mb-6">
+            <Card className="p-5 mb-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-card-foreground">
+                <h2 className="text-lg font-semibold">
                   {t('dashboard.upcoming_maintenance')}
                 </h2>
                 <Badge variant="secondary" className="gap-1">
@@ -204,8 +223,8 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
                             />
                           </div>
                           <div>
-                            <p className="font-medium text-card-foreground">{item.title}</p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="font-medium">{item.title}</p>
+                            <p className="text-sm text-gray-600">
                               {t('dashboard.due_in')} {item.dueIn}
                             </p>
                           </div>
@@ -226,10 +245,10 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
             </Card>
 
             {/* Recent Services */}
-            <Card className="p-5 shadow-card mb-6">
+            <Card className="p-5 mb-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-card-foreground">{t('dashboard.recent_service')}</h2>
-                <Calendar className="w-5 h-5 text-muted-foreground" />
+                <h2 className="text-lg font-semibold">{t('dashboard.recent_service')}</h2>
+                <Calendar className="w-5 h-5 text-gray-600" />
               </div>
 
               <div className="space-y-3">
@@ -239,10 +258,10 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
                     className="flex items-center justify-between py-3 border-b border-border last:border-0"
                   >
                     <div>
-                      <p className="font-medium text-card-foreground">{service.title}</p>
-                      <p className="text-sm text-muted-foreground">{service.date}</p>
+                      <p className="font-medium">{service.title}</p>
+                      <p className="text-sm text-gray-600">{service.date}</p>
                     </div>
-                    <span className="font-semibold text-card-foreground">{service.cost}</span>
+                    <span className="font-semibold">{service.cost}</span>
                   </div>
                 ))}
               </div>
@@ -254,7 +273,7 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
 
             {/* Edit Profile Button */}
             <Button 
-              className="w-full" 
+              className="w-full bg-[#8B1538] hover:bg-[#6D1028]" 
               onClick={() => setShowForm(true)}
             >
               <Edit className="w-4 h-4 mr-2" />
@@ -262,7 +281,7 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
             </Button>
           </>
         ) : (
-          <Card className="p-6 shadow-card animate-slide-up">
+          <Card className="p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-semibold">{t('vehicle.edit_profile')}</h2>
               <Button 
@@ -443,7 +462,8 @@ const VehicleProfile = ({ onLanguageChange, currentLang }: VehicleProfileProps) 
             </div>
           </Card>
         )}
-      </div>
+        </div>
+      </main>
 
       <BottomNav />
     </div>

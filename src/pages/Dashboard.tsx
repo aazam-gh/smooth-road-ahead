@@ -14,9 +14,13 @@ import {
   Calendar,
   Clock,
   ChevronRight,
+  MapPin,
+  Bell,
+  Settings,
 } from "lucide-react";
 import BottomNav from "@/components/BottomNav";
 import Header from "@/components/Header";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { useI18n } from "@/lib/i18n";
 import { LanguageCode } from "../../types";
 import DailyCheckin from "@/components/DailyCheckin";
@@ -49,7 +53,7 @@ const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
       title: t('food.shawarma'),
       description: t('food.shawarma_desc'),
       icon: Utensils,
-      color: "text-orange-500",
+      color: "text-primary",
     },
     {
       id: 2,
@@ -95,15 +99,36 @@ const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      <Header 
-        title={t('dashboard.title')} 
-        onLanguageChange={onLanguageChange}
-        currentLang={currentLang}
-        showProfileButton={true}
-      />
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <div className="flex items-center gap-2 sm:gap-4">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
+                <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+              </div>
+              <h2 className="text-[#8B1538] text-lg sm:text-xl truncate">{t('dashboard.title')}</h2>
+            </div>
 
-      <div className="max-w-md mx-auto px-6 py-8 space-y-8">
+            <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
+              <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
+              </Button>
+              <div className="hidden md:block">
+                <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                  <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-md mx-auto space-y-6">
         {/* For you / personalized recommendations */}
         <ForYou />
 
@@ -206,8 +231,8 @@ const Dashboard = ({ onLanguageChange, currentLang }: DashboardProps) => {
             </CardContent>
           </Card>
         </section>
-      </div>
-
+        </div>
+      </main>
       <BottomNav />
     </div>
   );
