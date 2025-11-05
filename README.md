@@ -1,73 +1,161 @@
-# Welcome to your Lovable project
+# Qatar Insurance Lifestyle
 
-## Project info
+Your personal lifestyle companion for discovering, planning, and enjoying life in Qatar.
 
-**URL**: https://lovable.dev/projects/f45bc183-6874-42e6-95d8-eb9c04b2bab3
+## Project Overview
 
-## How can I edit this code?
+Qatar Insurance Lifestyle is a comprehensive lifestyle application designed specifically for Qatar residents. The app combines AI-powered recommendations, personalized planning tools, and insurance management features to enhance your daily life experience in Qatar.
 
-There are several ways of editing your application.
+Note: For a comprehensive, end-to-end product and technical overview (user flows, architecture, data model, i18n, AI, and more), see docs/APP_DOCUMENTATION.md.
 
-**Use Lovable**
+## Key Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/f45bc183-6874-42e6-95d8-eb9c04b2bab3) and start prompting.
+### 🎯 Smart Lifestyle Recommendations
+- AI-powered suggestions based on your preferences and interests
+- Personalized offers and deals from local businesses
+- Curated content for dining, entertainment, fitness, and shopping
 
-Changes made via Lovable will be committed automatically to this repo.
+### 📅 Daily Planning & Check-ins
+- Daily check-in system with streak tracking
+- Personal activity planning and scheduling
+- Event discovery and management
+- Quick actions for common tasks
 
-**Use your preferred IDE**
+### 🤖 AI Chat Assistant
+- **Family Activities Planner**: AI-powered planning for group and family experiences
+- **Travel Optimization**: Weekend trip planning with weather and traffic considerations
+- **Insurance Assistant**: Help with policy questions, claims, and coverage advice
+- Voice chat capabilities for hands-free interaction
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 🏥 Insurance Management
+- **Vehicle Insurance**: Track policy details, maintenance schedules, and service history
+- **Health Insurance**: Manage coverage, appointments, and medical services
+- **Home Insurance**: Property protection and policy management
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 🌍 Bilingual Support
+- Full Arabic and English language support
+- RTL (Right-to-Left) layout for Arabic
+- Culturally appropriate content and recommendations
 
-Follow these steps:
+### 📱 Mobile-First Design
+- Responsive design optimized for mobile devices
+- Bottom navigation for easy thumb navigation
+- Touch-friendly interface elements
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+## Technology Stack
+
+This project is built with modern web technologies:
+
+- **Frontend Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **UI Components**: shadcn/ui with Radix UI primitives
+- **Styling**: Tailwind CSS with custom theming
+- **Routing**: React Router DOM
+- **State Management**: React Query (TanStack Query)
+- **AI Integration**: Google Gemini AI for chat and recommendations
+- **Internationalization**: Custom i18n implementation
+- **Audio Processing**: Web Audio API for voice features
+
+## Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository:
+```bash
 git clone <YOUR_GIT_URL>
+cd qatar-insurance-lifestyle
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2. Install dependencies:
+```bash
+npm install
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+3. Set up environment variables:
+```bash
+cp .env.example .env
+# Add your Gemini API key for AI features
+VITE_GEMINI_API_KEY=your_api_key_here
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+4. Start the development server:
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+5. Open your browser and navigate to `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Available Scripts
 
-**Use GitHub Codespaces**
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run build:dev` - Build for development
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Project Structure
 
-## What technologies are used for this project?
+```
+src/
+├── components/          # Reusable UI components
+│   ├── ui/             # shadcn/ui components
+│   └── ...             # Custom components
+├── pages/              # Application pages/routes
+├── lib/                # Utility functions and services
+├── hooks/              # Custom React hooks
+└── main.tsx           # Application entry point
+```
 
-This project is built with:
+## Features in Detail
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Dashboard
+- Weather information and traffic updates
+- Today's plans and quick actions
+- Personalized offers and recommendations
+- Activity tracking and statistics
 
-## How can I deploy this project?
+### Discover Feed
+- AI-curated content based on user preferences
+- Like and save functionality
+- Category-based filtering
+- Related content suggestions
 
-Simply open [Lovable](https://lovable.dev/projects/f45bc183-6874-42e6-95d8-eb9c04b2bab3) and click on Share -> Publish.
+### Chat Assistant
+- Natural language processing for lifestyle queries
+- Voice input and output capabilities
+- Integration with Maps for location-based services
+- Booking and reservation assistance
 
-## Can I connect a custom domain to my Lovable project?
+### Insurance Profiles
+- Comprehensive vehicle, health, and home insurance management
+- Service scheduling and maintenance tracking
+- Policy document storage and reminders
+- Claims assistance and guidance
 
-Yes, you can!
+## Deployment
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+The application can be deployed using various platforms:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+1. **Lovable Platform**: Direct deployment through the Lovable interface
+2. **Vercel/Netlify**: Connect your repository for automatic deployments
+3. **Traditional hosting**: Build and deploy the `dist` folder
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is proprietary software developed for Qatar Insurance Company.
+
+## Support
+
+For support and questions, please contact the development team or refer to the in-app help section.

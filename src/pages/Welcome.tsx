@@ -22,10 +22,10 @@ const Welcome = ({ onLanguageChange, currentLang }: WelcomeProps) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             <div className="flex items-center gap-2 sm:gap-4">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#6568F4] rounded-lg flex items-center justify-center">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               </div>
-              <h2 className="text-[#8B1538] text-lg sm:text-xl">QIC</h2>
+              <h2 className="text-[#6568F4] text-lg sm:text-xl">QIC</h2>
             </div>
             <LanguageToggle currentLang={currentLang} onToggle={onLanguageChange} />
           </div>
@@ -36,7 +36,7 @@ const Welcome = ({ onLanguageChange, currentLang }: WelcomeProps) => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-md mx-auto">
           <div className="text-center mb-8">
-            <div className="w-24 h-24 bg-[#8B1538] rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-24 h-24 bg-[#6568F4] rounded-full flex items-center justify-center mx-auto mb-6">
               <MapPin className="w-12 h-12 text-white" />
             </div>
             <h1 className="mb-4">{t('welcome.title')}</h1>
@@ -48,8 +48,8 @@ const Welcome = ({ onLanguageChange, currentLang }: WelcomeProps) => {
           <div className="space-y-4 mb-8">
             <Card className="p-6">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Shield className="w-6 h-6 text-[#8B1538]" />
+                <div className="w-12 h-12 bg-[#6568F4]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-6 h-6 text-[#6568F4]" />
                 </div>
                 <div>
                   <h3 className="mb-2">{t('welcome.feature1.title')}</h3>
@@ -62,8 +62,8 @@ const Welcome = ({ onLanguageChange, currentLang }: WelcomeProps) => {
 
             <Card className="p-6">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Bell className="w-6 h-6 text-[#8B1538]" />
+                <div className="w-12 h-12 bg-[#6568F4]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Bell className="w-6 h-6 text-[#6568F4]" />
                 </div>
                 <div>
                   <h3 className="mb-2">{t('welcome.feature2.title')}</h3>
@@ -79,12 +79,12 @@ const Welcome = ({ onLanguageChange, currentLang }: WelcomeProps) => {
             <Button
               onClick={() => navigate("/onboarding")}
               size="lg"
-              className="w-full bg-[#8B1538] hover:bg-[#6D1028]"
+              className="w-full bg-[#6568F4] hover:bg-[#6568F4]"
             >
               {t('welcome.get_started')}
             </Button>
             <Button
-              onClick={() => navigate("/onboarding")}
+              onClick={() => navigate("/ndashboard")}
               variant="outline"
               size="lg"
               className="w-full"

@@ -159,6 +159,21 @@ export const calculatePrrScore = async (vehicle: VehicleProfile, environment: En
   }
 };
 
+// Utility function to format text for better readability
+const formatStreamedText = (text: string): string => {
+  return text
+    // Ensure proper spacing after bullet points
+    .replace(/•\s*/g, '• ')
+    // Ensure proper spacing after numbered lists
+    .replace(/(\d+\.)\s*/g, '$1 ')
+    // Add line breaks before section headers (words followed by colon)
+    .replace(/([A-Z][a-zA-Z\s]+:)/g, '\n$1')
+    // Clean up multiple consecutive spaces
+    .replace(/\s{3,}/g, '  ')
+    // Ensure proper line breaks
+    .replace(/\n{3,}/g, '\n\n');
+};
+
 // For Chatbot (streaming). Provide a graceful demo-mode stream when no API key.
 let chat: any = null;
 if (HAS_KEY) {
@@ -185,11 +200,36 @@ export const chatService = {
       }
       return;
     }
-    const stream = await chat.sendMessageStream({ message });
+
+    // Enhanced prompt for better, more structured responses
+    const enhancedPrompt = `${message}
+
+Please provide a clear, concise, and well-structured response following these guidelines:
+
+FORMATTING:
+• Use bullet points (•) for lists and key points
+• Keep paragraphs short (2-3 sentences max)
+• Use clear section headers when appropriate
+• Add proper spacing between sections
+• Be direct and actionable
+
+CONTENT:
+• Provide practical, actionable information
+• Include specific examples when helpful
+• Prioritize the most important information first
+• Use simple, clear language
+• Avoid unnecessary jargon
+
+Please format your response to be easily scannable and helpful.`;
+
+    const stream = await chat.sendMessageStream({ message: enhancedPrompt });
     for await (const chunk of stream) {
       // Some SDKs expose chunk.text or chunk.text()
       const t = typeof (chunk as any).text === 'function' ? await (chunk as any).text() : (chunk as any).text;
-      if (t) yield t as string;
+      if (t) {
+        const formattedText = formatStreamedText(t);
+        yield formattedText;
+      }
     }
   }
 };

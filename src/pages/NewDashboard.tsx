@@ -339,10 +339,10 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             <div className="flex items-center gap-2 sm:gap-4">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#6568F4] rounded-lg flex items-center justify-center">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               </div>
-              <h2 className="text-[#8B1538] text-lg sm:text-xl">QIC</h2>
+              <h2 className="text-[#6568F4] text-lg sm:text-xl">QIC</h2>
             </div>
 
             <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
@@ -358,7 +358,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                   <Settings className="h-4 w-4 sm:h-5 sm:w-5" />
                 </Button>
               </div>
-              <Avatar className="h-7 w-7 sm:h-9 sm:w-9 bg-[#8B1538]">
+              <Avatar className="h-7 w-7 sm:h-9 sm:w-9 bg-[#6568F4]">
                 <div className="flex items-center justify-center h-full w-full text-white text-sm sm:text-base">
                   {userName.charAt(0).toUpperCase()}
                 </div>
@@ -403,7 +403,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
               </Card>
 
               {/* Traffic Card */}
-              <Card className="p-6 bg-gradient-to-br from-[#8B1538] to-[#6D1028] text-white border-0">
+              <Card className="p-6 bg-gradient-to-br from-[#6568F4] to-[#6568F4] text-white border-0">
                 <div className="flex items-start justify-between mb-4">
                   <div>
                     <p className="text-white/80 text-sm mb-1">{t('newdashboard.traffic_to_office')}</p>
@@ -430,7 +430,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                 <h3>{t('newdashboard.todays_plans')}</h3>
                 <Button 
                   size="sm" 
-                  className="bg-[#8B1538] hover:bg-[#6D1028]"
+                  className="bg-[#6568F4] hover:bg-[#6568F4]"
                   onClick={() => setShowAddPlanForm(!showAddPlanForm)}
                 >
                   <Plus className="h-4 w-4 mr-2" />
@@ -451,7 +451,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                         type="text"
                         value={newPlan.title}
                         onChange={(e) => setNewPlan(prev => ({ ...prev, title: e.target.value }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#8B1538] focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#6568F4] focus:border-transparent"
                         placeholder={t('newdashboard.enter_plan_title')}
                       />
                     </div>
@@ -463,7 +463,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                         type="time"
                         value={newPlan.time}
                         onChange={(e) => setNewPlan(prev => ({ ...prev, time: e.target.value }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#8B1538] focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#6568F4] focus:border-transparent"
                       />
                     </div>
                     <div>
@@ -474,7 +474,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                         type="text"
                         value={newPlan.location}
                         onChange={(e) => setNewPlan(prev => ({ ...prev, location: e.target.value }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#8B1538] focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#6568F4] focus:border-transparent"
                         placeholder={t('newdashboard.enter_location')}
                       />
                     </div>
@@ -485,7 +485,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                       <select
                         value={newPlan.type}
                         onChange={(e) => setNewPlan(prev => ({ ...prev, type: e.target.value }))}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#8B1538] focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#6568F4] focus:border-transparent"
                       >
                         <option value="general">{t('newdashboard.general')}</option>
                         <option value="work">{t('newdashboard.work')}</option>
@@ -499,7 +499,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                     <Button 
                       size="sm" 
                       onClick={addPlan}
-                      className="bg-[#8B1538] hover:bg-[#6D1028]"
+                      className="bg-[#6568F4] hover:bg-[#6568F4]"
                     >
                       {t('newdashboard.save_plan')}
                     </Button>
@@ -531,8 +531,8 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                       <div key={plan.id}>
                         <div className="flex items-start gap-4 group">
                           <div className="flex-shrink-0">
-                            <div className="w-12 h-12 bg-[#8B1538]/10 rounded-lg flex items-center justify-center">
-                              <Icon className="h-5 w-5 text-[#8B1538]" />
+                            <div className="w-12 h-12 bg-[#6568F4]/10 rounded-lg flex items-center justify-center">
+                              <Icon className="h-5 w-5 text-[#6568F4]" />
                             </div>
                           </div>
                           <div className="flex-1 min-w-0">
@@ -581,7 +581,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                 {planSuggestions.map((category) => {
                   const Icon = category.icon;
                   return (
-                    <Card key={category.id} className="p-4 hover:shadow-md transition-shadow cursor-pointer border-2 hover:border-[#8B1538]/20">
+                    <Card key={category.id} className="p-4 hover:shadow-md transition-shadow cursor-pointer border-2 hover:border-[#6568F4]/20">
                       <div className="flex items-start gap-3 mb-4">
                         <div className={`w-10 h-10 ${category.color} rounded-lg flex items-center justify-center flex-shrink-0`}>
                           <Icon className="h-5 w-5 text-white" />
@@ -638,7 +638,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute top-3 right-3">
-                        <Badge className="bg-[#8B1538] text-white border-0">
+                        <Badge className="bg-[#6568F4] text-white border-0">
                           {offer.discount} OFF
                         </Badge>
                       </div>
@@ -670,7 +670,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                           size="sm" 
                           className={claimedOffers.has(offer.id) 
                             ? "bg-green-500 hover:bg-green-600" 
-                            : "bg-[#8B1538] hover:bg-[#6D1028]"
+                            : "bg-[#6568F4] hover:bg-[#6568F4]"
                           }
                           onClick={(e) => {
                             e.stopPropagation();
@@ -705,7 +705,7 @@ export function NewDashboard({ currentLang, onLanguageChange }: NewDashboardProp
                     <span className="text-sm">12/15</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-[#8B1538] h-2 rounded-full" style={{ width: '80%' }} />
+                    <div className="bg-[#6568F4] h-2 rounded-full" style={{ width: '80%' }} />
                   </div>
                 </div>
                 <Separator />

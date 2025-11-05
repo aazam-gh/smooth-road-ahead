@@ -30,10 +30,10 @@ const Account = ({ onLanguageChange, currentLang }: AccountProps) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             <div className="flex items-center gap-2 sm:gap-4">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#8B1538] rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#6568F4] rounded-lg flex items-center justify-center">
                 <MapPin className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
               </div>
-              <h2 className="text-[#8B1538] text-lg sm:text-xl truncate">{t('account.title')}</h2>
+              <h2 className="text-[#6568F4] text-lg sm:text-xl truncate">{t('account.title')}</h2>
             </div>
 
             <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
@@ -56,15 +56,15 @@ const Account = ({ onLanguageChange, currentLang }: AccountProps) => {
         <div className="max-w-md mx-auto">
         <Card className="p-6 mb-6">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 rounded-full bg-[#8B1538]/10 flex items-center justify-center">
-              <User className="w-8 h-8 text-[#8B1538]" />
+            <div className="w-16 h-16 rounded-full bg-[#6568F4]/10 flex items-center justify-center">
+              <User className="w-8 h-8 text-[#6568F4]" />
             </div>
             <div>
               <h2 className="text-lg font-semibold">{t('user.john_doe')}</h2>
               <p className="text-sm text-gray-600">{t('account.email')}</p>
             </div>
           </div>
-          <Button className="w-full bg-[#8B1538] hover:bg-[#6D1028]">
+          <Button className="w-full bg-[#6568F4] hover:bg-[#6568F4]">
             {t('account.profile')}
           </Button>
         </Card>
@@ -90,8 +90,8 @@ const Account = ({ onLanguageChange, currentLang }: AccountProps) => {
                   key={index}
                   className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-[#8B1538]/10 flex items-center justify-center flex-shrink-0">
-                    <Icon className="w-5 h-5 text-[#8B1538]" />
+                  <div className="w-10 h-10 rounded-lg bg-[#6568F4]/10 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-5 h-5 text-[#6568F4]" />
                   </div>
                   <div className="flex-1 text-left">
                     <p className="font-medium">{item.title}</p>

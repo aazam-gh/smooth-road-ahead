@@ -45,7 +45,7 @@ export function ImageCarousel({ currentStep }: ImageCarouselProps) {
   }, [currentStep]);
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#8B1538]">
+    <div className="relative h-full w-full overflow-hidden bg-[#6568F4]">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
@@ -60,7 +60,7 @@ export function ImageCarousel({ currentStep }: ImageCarouselProps) {
             alt={slides[currentIndex].title}
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#8B1538]/60 via-[#8B1538]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[#6568F4]/60 via-[#6568F4]/40 to-transparent" />
         </motion.div>
       </AnimatePresence>
 

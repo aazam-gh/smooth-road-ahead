@@ -74,7 +74,7 @@ export function OfferModal({ offer, isOpen, onClose, onClaim, isClaimed }: Offer
             className="w-full h-full object-cover"
           />
           <div className="absolute top-4 left-4">
-            <Badge className="bg-[#8B1538] text-white border-0 text-sm">
+            <Badge className="bg-[#6568F4] text-white border-0 text-sm">
               {offer.discount} OFF
             </Badge>
           </div>
@@ -164,7 +164,7 @@ export function OfferModal({ offer, isOpen, onClose, onClaim, isClaimed }: Offer
           {offer.originalPrice && offer.discountedPrice && (
             <div className="mb-6 p-4 bg-gray-50 rounded-lg">
               <div className="flex items-center gap-3">
-                <span className="text-2xl font-bold text-[#8B1538]">{offer.discountedPrice}</span>
+                <span className="text-2xl font-bold text-[#6568F4]">{offer.discountedPrice}</span>
                 <span className="text-lg text-gray-500 line-through">{offer.originalPrice}</span>
                 <Badge className="bg-green-100 text-green-800 border-0">
                   {t('newdashboard.save')} {offer.discount}
@@ -192,7 +192,7 @@ export function OfferModal({ offer, isOpen, onClose, onClaim, isClaimed }: Offer
           <div className="flex gap-3">
             {!isClaimed ? (
               <Button 
-                className="flex-1 bg-[#8B1538] hover:bg-[#6D1028]"
+                className="flex-1 bg-[#6568F4] hover:bg-[#6568F4]"
                 onClick={handleClaim}
               >
                 {t('newdashboard.claim_offer')}
